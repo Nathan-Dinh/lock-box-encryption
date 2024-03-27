@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { DatabaseService } from '../service/database.service'; 
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,14 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent {
-  title = 'my-app';
+export class AppComponent implements OnInit {
+  dbService : DatabaseService
+
+  constructor(){
+    this.dbService = inject(DatabaseService)
+  }
+
+  ngOnInit() : void{
+    this.dbService.createDatabase();
+  }
 }
