@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router'
-import { TestComponent } from './pages/test/test.component'
+import { LoginComponent } from './pages/login/login.component'
 import { InventoryComponent } from './pages/inventory/inventory.component'
 
 export const routes: Routes = [
@@ -9,8 +9,8 @@ export const routes: Routes = [
     title: 'Inventory Component',
   },
   {
-    path: 'test/1',
-    component: TestComponent,
-    title: 'Test page',
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login page',
   },
 ]
