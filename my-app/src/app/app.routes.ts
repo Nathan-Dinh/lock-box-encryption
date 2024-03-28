@@ -2,7 +2,7 @@ import { Routes } from '@angular/router'
 import { LoginComponent } from './pages/login/login.component'
 import { InventoryComponent } from './pages/inventory/inventory.component'
 import { authGuard } from '../services/auth/auth.guard'
-import { CreateNewUserComponent } from './pages/create-new-user/create-new-user.component'
+import { CreateUserComponent } from './pages/create-new-user/create-user.component'
 
 export const routes: Routes = [
   {
@@ -13,7 +13,7 @@ export const routes: Routes = [
   },
   {
     path: 'create-user',
-    component: CreateNewUserComponent,
+    component: CreateUserComponent,
     title: 'Create New User',
   },
   {
