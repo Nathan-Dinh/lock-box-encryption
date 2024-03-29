@@ -1,37 +1,42 @@
-<form>
+<form [formGroup]="createUserForm">
   <div class="row gy-3 overflow-hidden">
     <div class="col-12">
+      @if(createUserForm.controls['userName'].invalid &&
+      createUserForm.controls["userName"].touched ){
+      <p class="text-danger">Username is required</p>
+      }
       <div class="form-floating mb-3">
         <input
-          type="userName"
+          type="addUserName"
           class="form-control"
-          name="userName"
-          id="userName"
+          name="addUserName"
+          id="addUserName"
           formControlName="userName"
         />
         <label for="userName" class="form-label">User Name</label>
       </div>
     </div>
-    <div class="col-12">
+    <div formGroupName="passwordGroup" class="col-12">
       <div class="form-floating mb-3">
         <input
-          type="password"
+          type="addPassword"
           class="form-control"
-          name="password"
-          id="password"
-          formControlName="password"
+          name="addPassword"
+          id="addPassword"
+          formControlName="_password"
         />
         <label for="password" class="form-label">Password</label>
       </div>
-    </div>
-    <div class="col-12">
+      @if(createUserForm.controls.passwordGroup.errors?.['passwordGroupError']){
+        <p class="text-danger">Wack</p>
+      }
       <div class="form-floating mb-3">
         <input
-          type="password"
+          type="addPassword2"
           class="form-control"
-          name="password"
-          id="password"
-          formControlName="password"
+          name="addPassword2"
+          id="addPassword2"
+          formControlName="_password2"
         />
         <label for="password" class="form-label">Re-enter Password</label>
       </div>
@@ -45,3 +50,4 @@
     </div>
   </div>
 </form>
+<form>form value : {{ createUserForm.value | json }}</form>
