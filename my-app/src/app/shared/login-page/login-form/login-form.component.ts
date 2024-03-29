@@ -13,7 +13,6 @@ import { CookieEncryptionService } from '../../../../services/crypto/cookie-encr
 @Component({
   selector: 'login-form',
   standalone: true,
-  providers: [CookieService],
   imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css',
@@ -21,13 +20,11 @@ import { CookieEncryptionService } from '../../../../services/crypto/cookie-encr
 export class LoginFormComponent {
   userDal = inject(UserDalService)
   CEService = inject(CookieEncryptionService)
-  cookieService : CookieService
+  cookieService = inject(CookieService)
   user: User = new User('', '')
   isFormValid = true
 
-  constructor(private builder: FormBuilder, cookieService : CookieService) {
-    this.cookieService = cookieService
-  }
+  constructor(private builder: FormBuilder) {}
 
   userForm = this.builder.group({
     userName: ['', [Validators.required]],
@@ -37,9 +34,8 @@ export class LoginFormComponent {
 
   addUserClickHandler(): void {
     if (this.userForm.valid) {
-      console.log(this.userForm.value)
       if (this.userForm.value.keepMeLoggedIn) {
-        this.cookieService.set('test', this.CEService.encryptCookie("dsa") )
+        this.cookieService.set('test', this.CEService.encryptCookie('dsa'))
       }
     } else {
       this.isFormValid = false
