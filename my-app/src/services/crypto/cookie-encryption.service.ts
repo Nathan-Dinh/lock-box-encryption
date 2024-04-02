@@ -6,11 +6,13 @@ import * as CryptoJS from 'crypto-js';
   providedIn: 'root',
 })
 export class CookieEncryptionService {
-  constructor() {}
   
-  encryptCookie(data: string): string {
-    return CryptoJS.AES.encrypt(data, environment.key).toString()
+  encryptCookie(cBody: string): string {
+    return CryptoJS.AES.encrypt(cBody, environment.key).toString()
   }
 
-  decryptCookie() {}
+  decryptCookie(cBody: string) {
+    const bytes = CryptoJS.AES.decrypt(cBody, environment.key)
+    return bytes.toString(CryptoJS.enc.Utf8)
+  }
 }
