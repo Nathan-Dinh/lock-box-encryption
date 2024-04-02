@@ -1,10 +1,10 @@
-<form [formGroup]="userForm">
+@if(errorMessage !== ""){
+    <div class="alert alert-danger" role="alert">
+        {{errorMessage}}
+    </div>
+}
+<form [formGroup]="userForm" (submit)="onSubmitHandler()">
     <div class="row gy-3 overflow-hidden">
-        @if(!isFormValid){
-        <div class="alert alert-danger" role="alert">
-            Sorry, the user you where trying find could not be found
-        </div>
-        }
         <div class="col-12">
             @if(userForm.controls['userName'].invalid && userForm.controls["userName"].touched ){
             <p class="text-danger">Username is required</p>
@@ -33,7 +33,7 @@
         </div>
         <div class="col-12">
             <div class="d-grid">
-                <button [class]=" userForm.valid? 'btn bsb-btn-2xl btn-primary' : 'btn bsb-btn-2xl btn-secondary disabled'" (click)="addUserClickHandler()" type="submit">Log in
+                <button [class]=" userForm.valid? 'btn bsb-btn-2xl btn-primary' : 'btn bsb-btn-2xl btn-secondary disabled'"  type="submit">Log in
                     now</button>
             </div>
         </div>
