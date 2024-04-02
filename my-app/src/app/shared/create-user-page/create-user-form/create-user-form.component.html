@@ -1,53 +1,40 @@
-<form [formGroup]="createUserForm">
+<form [formGroup]="createUserForm" (submit)="onSubmitHandler()">
   <div class="row gy-3 overflow-hidden">
     <div class="col-12">
-      @if(createUserForm.controls['userName'].invalid &&
-      createUserForm.controls["userName"].touched ){
+      @if(refUserName.invalid && refUserName.touched){
       <p class="text-danger">Username is required</p>
       }
       <div class="form-floating mb-3">
-        <input
-          type="addUserName"
-          class="form-control"
-          name="addUserName"
-          id="addUserName"
-          formControlName="userName"
-        />
+        <input type="addUserName" class="form-control" name="addUserName" id="addUserName" formControlName="userName" />
         <label for="userName" class="form-label">User Name</label>
       </div>
     </div>
     <div formGroupName="passwordGroup" class="col-12">
-      <div class="form-floating mb-3">
-        <input
-          type="addPassword"
-          class="form-control"
-          name="addPassword"
-          id="addPassword"
-          formControlName="_password"
-        />
-        <label for="password" class="form-label">Password</label>
-      </div>
-      @if(createUserForm.controls.passwordGroup.errors?.['passwordGroupError']){
-        <p class="text-danger">Wack</p>
+      @if(refPassword1.invalid && refPassword1.touched){
+        <p class="text-danger">Password required</p>
       }
       <div class="form-floating mb-3">
-        <input
-          type="addPassword2"
-          class="form-control"
-          name="addPassword2"
-          id="addPassword2"
-          formControlName="_password2"
-        />
+        <input type="addPassword" class="form-control" name="addPassword" id="addPassword"
+          formControlName="password1" />
+        <label for="password" class="form-label">Password</label>
+      </div>
+      @if(refPassword1.valid){
+        @if(createUserForm.controls.passwordGroup.errors?.['passwordGroupError'] && refPassword2.touched ){
+          <p class="text-danger">Password must match</p>
+        }
+      <div class="form-floating mb-3">
+        <input type="addPassword2" class="form-control" name="addPassword2" id="addPassword2"
+          formControlName="password2" />
         <label for="password" class="form-label">Re-enter Password</label>
       </div>
+      }
     </div>
     <div class="col-12">
       <div class="d-grid">
-        <button class="btn bsb-btn-2xl btn-primary" type="submit">
-          Log in now
+        <button [class]="createUserForm.valid! ? 'btn bsb-btn-2xl btn-primary' : 'btn bsb-btn-2xl btn-secondary disabled'" type="submit">
+          Create Account
         </button>
       </div>
     </div>
   </div>
 </form>
-<form>form value : {{ createUserForm.value | json }}</form>
