@@ -10,8 +10,7 @@ export class DatabaseService {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open("LBEDB", 1);
       request.onerror = (event) => {
-        console.error("Error in creating database.");
-        reject("Error in creating database");
+        reject('Error in creating database')
       }
       request.onsuccess = (event) => {
         // @ts-ignore
@@ -22,7 +21,7 @@ export class DatabaseService {
         // @ts-ignore
         this.db = event.target.result;
         this.db.createObjectStore("users", {
-          keyPath: "id",
+          keyPath: "userName",
           autoIncrement: true,
         });
         this.db.createObjectStore("user_gallery", {
