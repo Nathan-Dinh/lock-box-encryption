@@ -1,0 +1,41 @@
+@if(errorMessage !== ""){
+    <div class="alert alert-danger" role="alert">
+        {{errorMessage}}
+    </div>
+}
+<form [formGroup]="userForm" (submit)="onSubmitHandler()">
+    <div class="row gy-3 overflow-hidden">
+        <div class="col-12">
+            @if(userForm.controls['userName'].invalid && userForm.controls["userName"].touched ){
+            <p class="text-danger">Username is required</p>
+            }
+            <div class="form-floating mb-3">
+                <input type="userName" class="form-control" name="userName" id="userName" formControlName="userName">
+                <label for="userName" class="form-label">User Name</label>
+            </div>
+        </div>
+        <div class="col-12">
+            @if(userForm.controls['password'].invalid && userForm.controls["password"].touched){
+            <p class="text-danger">Password is required</p>
+            }
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" name="password" id="password" formControlName="password">
+                <label for="password" class="form-label">Password</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="remember_me" id="remember_me" formControlName="keepMeLoggedIn">
+                <label class="form-check-label text-secondary" for="remember_me">
+                    Keep me logged in
+                </label>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="d-grid">
+                <button [class]=" userForm.valid? 'btn bsb-btn-2xl btn-primary' : 'btn bsb-btn-2xl btn-secondary disabled'"  type="submit">Log in
+                    now</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,40 @@
+<form [formGroup]="createUserForm" (submit)="onSubmitHandler()">
+  <div class="row gy-3 overflow-hidden">
+    <div class="col-12">
+      @if(refUserName.invalid && refUserName.touched){
+      <p class="text-danger">Username is required</p>
+      }
+      <div class="form-floating mb-3">
+        <input type="addUserName" class="form-control" name="addUserName" id="addUserName" formControlName="userName" />
+        <label for="userName" class="form-label">User Name</label>
+      </div>
+    </div>
+    <div formGroupName="passwordGroup" class="col-12">
+      @if(refPassword1.invalid && refPassword1.touched){
+        <p class="text-danger">Password required</p>
+      }
+      <div class="form-floating mb-3">
+        <input type="addPassword" class="form-control" name="addPassword" id="addPassword"
+          formControlName="password1" />
+        <label for="password" class="form-label">Password</label>
+      </div>
+      @if(refPassword1.valid){
+        @if(createUserForm.controls.passwordGroup.errors?.['passwordGroupError'] && refPassword2.touched ){
+          <p class="text-danger">Password must match</p>
+        }
+      <div class="form-floating mb-3">
+        <input type="addPassword2" class="form-control" name="addPassword2" id="addPassword2"
+          formControlName="password2" />
+        <label for="password" class="form-label">Re-enter Password</label>
+      </div>
+      }
+    </div>
+    <div class="col-12">
+      <div class="d-grid">
+        <button [class]="createUserForm.valid! ? 'btn bsb-btn-2xl btn-primary' : 'btn bsb-btn-2xl btn-secondary disabled'" type="submit">
+          Create Account
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
