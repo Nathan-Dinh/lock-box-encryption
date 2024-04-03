@@ -6,11 +6,12 @@ import {
   Validators
 } from '@angular/forms'
 import { CookieService } from 'ngx-cookie-service'
-import { UserDalService } from '../../../../services/user.dal.service'
+import { UserDalService } from '../../../../services/database/user.dal.service'
 import { User } from '../../../../models/user.model'
 import { CookieEncryptionService } from '../../../../services/crypto/cookie-encryption.service'
-import { AuthControlService } from '../../../../services/auth/auth-control.service'
+import { AuthControlService } from '../../../../store/auth-store.service'
 import { Router } from '@angular/router'
+import { UserInfoService } from '../../../../store/user-info-store.service'
 
 @Component({
   selector: 'login-form',
@@ -26,6 +27,7 @@ export class LoginFormComponent {
   private authControl = inject(AuthControlService)
   private route = inject(Router)
   private frmBuilder = inject(FormBuilder)
+  private uiService = inject(UserInfoService)
   public errorMessage: string = ''
 
   userForm = this.frmBuilder.group({
@@ -42,8 +44,8 @@ export class LoginFormComponent {
       this.userDal.findUser(USER.userName).then((data) => {
         if (data !== null) {
           this.authControl.authorize()
-          console.log(this.authControl.isAuth)
-          this.route.navigate(['/home/gallery'])
+          this.uiService.setUser(USER)
+          this.route.navigate(['/home/gallery']) // Might need to change
           if (this.userForm.value.keepMeLoggedIn) {
             const C_BODY: string = USER.userName + '-' + USER.password
             const C_Name: string = 'session'

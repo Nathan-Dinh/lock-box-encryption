@@ -5,6 +5,7 @@ import { CreateUserComponent } from './pages/create-new-user/create-user.compone
 import { HomeComponent } from './pages/home/home.component'
 import { EncryptionComponent } from './pages/home/encryption/encryption.component'
 import { GalleryComponent } from './pages/home/gallery/gallery.component'
+import { AccountComponent } from './pages/home/account/account.component'
 
 export const routes: Routes = [
   {
@@ -15,6 +16,12 @@ export const routes: Routes = [
         path: 'gallery',
         component: GalleryComponent,
         title: 'Gallery',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'account',
+        component: AccountComponent,
+        title: 'Account',
         canActivate: [authGuard],
       },
       {

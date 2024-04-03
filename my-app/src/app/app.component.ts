@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DatabaseService } from '../services/database.service' 
+import { DatabaseService } from '../services/database/database.service' 
 
 @Component({
   selector: 'app-root',
