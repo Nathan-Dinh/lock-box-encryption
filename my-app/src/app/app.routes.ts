@@ -6,10 +6,16 @@ import { HomeComponent } from './pages/home/home.component'
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     component: HomeComponent,
-    title: 'Gallery',
-    canActivate: [authGuard]
+    title: 'Home',
+    canActivate: [authGuard],
+  },
+  {
+    path: 'home/encryption',
+    component: HomeComponent,
+    title: 'Encryption',
+    canActivate: [authGuard],
   },
   {
     path: 'create-user',
@@ -20,5 +26,10 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     title: 'Login',
+  },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: '**',
+    redirectTo: 'home',
   },
 ]
