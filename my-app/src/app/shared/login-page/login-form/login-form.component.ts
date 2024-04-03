@@ -43,7 +43,7 @@ export class LoginFormComponent {
         if (data !== null) {
           this.authControl.authorize()
           console.log(this.authControl.isAuth)
-          this.route.navigate(['/home'])
+          this.route.navigate(['/home/gallery'])
           if (this.userForm.value.keepMeLoggedIn) {
             const C_BODY: string = USER.userName + '-' + USER.password
             const C_Name: string = 'session'

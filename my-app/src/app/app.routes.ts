@@ -3,18 +3,28 @@ import { LoginComponent } from './pages/login/login.component'
 import { authGuard } from '../services/auth/auth.guard'
 import { CreateUserComponent } from './pages/create-new-user/create-user.component'
 import { HomeComponent } from './pages/home/home.component'
+import { EncryptionComponent } from './pages/home/encryption/encryption.component'
+import { GalleryComponent } from './pages/home/gallery/gallery.component'
 
 export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    children: [
+      {
+        path: 'gallery',
+        component: GalleryComponent,
+        title: 'Gallery',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'encryption',
+        component: EncryptionComponent,
+        title: 'Encryption',
+        canActivate: [authGuard],
+      },
+    ],
     title: 'Home',
-    canActivate: [authGuard],
-  },
-  {
-    path: 'home/encryption',
-    component: HomeComponent,
-    title: 'Encryption',
     canActivate: [authGuard],
   },
   {
@@ -27,9 +37,9 @@ export const routes: Routes = [
     component: LoginComponent,
     title: 'Login',
   },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'home/gallery', pathMatch: 'full' },
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: 'home/gallery',
   },
 ]
