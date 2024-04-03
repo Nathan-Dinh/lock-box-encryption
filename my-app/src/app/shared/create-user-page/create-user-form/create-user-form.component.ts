@@ -6,7 +6,7 @@ import {
   AbstractControl,
   FormControl,
 } from '@angular/forms'
-import { UserDalService } from '../../../../services/user.dal.service'
+import { UserDalService } from '../../../../services/database/user.dal.service'
 import { JsonPipe } from '@angular/common'
 import { User } from '../../../../models/user.model'
 import { Router } from '@angular/router'
