@@ -14,6 +14,6 @@ export class AppComponent {
   dbService : DatabaseService = inject(DatabaseService)
 
   constructor(){
-    this.dbService.createDatabase();
+    this.dbService.initDatabase();
   }
 }

@@ -6,9 +6,8 @@ import {
   Validators
 } from '@angular/forms'
 import { CookieService } from 'ngx-cookie-service'
-import { UserDalService } from '../../../../services/database/user.dal.service'
 import { User } from '../../../../models/user.model'
-import { CookieEncryptionService } from '../../../../services/crypto/cookie-encryption.service'
+import { UserCookieEncryptionService } from '../../../../services/crypto/user-cookie-encryption.service'
 import { AuthControlService } from '../../../../store/auth-store.service'
 import { Router } from '@angular/router'
 import { UserInfoService } from '../../../../store/user-info-store.service'
@@ -21,8 +20,7 @@ import { UserInfoService } from '../../../../store/user-info-store.service'
   styleUrl: './login-form.component.css',
 })
 export class LoginFormComponent {
-  private userDal = inject(UserDalService)
-  private ceService = inject(CookieEncryptionService)
+  private ceService = inject(UserCookieEncryptionService)
   private cService = inject(CookieService)
   private authControl = inject(AuthControlService)
   private route = inject(Router)
@@ -30,31 +28,28 @@ export class LoginFormComponent {
   private uiService = inject(UserInfoService)
   public errorMessage: string = ''
 
-  userForm = this.frmBuilder.group({
+  public userForm = this.frmBuilder.group({
     userName: ['', [Validators.required]],
     password: ['', [Validators.required]],
     keepMeLoggedIn: ['', []],
   })
 
-  onSubmitHandler(): void {
+  async onSubmitHandler() {
     if (this.userForm.valid) {
       const USER_NAME: string = this.userForm.value.userName as string
       const PASSWORD: string = this.userForm.value.password as string
       const USER: User = new User(USER_NAME, PASSWORD)
-      this.userDal.findUser(USER.userName).then((data) => {
-        if (data !== null) {
-          this.authControl.authorize()
-          this.uiService.setUser(USER)
-          this.route.navigate(['/home/gallery']) // Might need to change
-          if (this.userForm.value.keepMeLoggedIn) {
-            const C_BODY: string = USER.userName + '-' + USER.password
-            const C_Name: string = 'session'
-            this.cService.set(C_Name, this.ceService.encryptCookie(C_BODY))
-          }
-        } else this.errorMessage = 'User could not be found'
-      })
+      if (await this.authControl.authorizedUser(USER)) {
+        this.uiService.setUser(USER)
+        this.authControl.setAuth(true)
+        if (this.userForm.value.keepMeLoggedIn) {
+          this.ceService.setUserCookie(USER)
+        }
+        this.route.navigate(['/home/gallery'])
+      } else this.errorMessage = 'User could not be found'
     } else
       this.errorMessage =
-        'There was a in form. Verify if field value are correct'
+        'There was a issue. Verify if field values are correct'
   }
 }
+1
