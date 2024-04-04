@@ -33,10 +33,6 @@ export class DatabaseService {
   }
 
   initDatabase() {
-    this.createDatabase().then((data) => {
-      console.log("Database created successfully " + data);
-    }).catch((e) => {
-      console.log("Error in database creation: " + e.message);
-    });
+    this.createDatabase()
   }
 }
