@@ -18,7 +18,33 @@ export class UserDalService {
     }
   }
 
-  update() {}
+  delete(user : User ){
+    return new Promise((resolve, reject) =>{
+      const TRAN = this.lbedb.db.transaction(['users'], 'readwrite')
+      const USER_STORE = TRAN.objectStore("users")
+      const REQ_DELETE = USER_STORE.delete(user.userName)
+      REQ_DELETE.onsuccess = (event : any) =>{
+        resolve(event)
+      }
+      REQ_DELETE.onerror = (event : any) =>{
+        reject(event)
+      }
+    })
+  }
+
+  update(user: User) {
+    return new Promise((resolve, reject)=>{
+      const TRAN = this.lbedb.db.transaction(['users'], 'readwrite')
+      const USER_STORE = TRAN.objectStore('users')
+      const REQ_UPDATE = USER_STORE.put(user)
+      REQ_UPDATE.onsuccess = (event: any) => {
+        resolve(event);
+      };
+      REQ_UPDATE.onerror = (event: any) => {
+        reject(event)
+      };
+    } )
+  }
 
   findUser(userName: string): Promise<any> {
     return new Promise((resolve, reject) => {
