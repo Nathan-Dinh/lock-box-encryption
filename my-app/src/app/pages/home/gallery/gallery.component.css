@@ -1,0 +1,12 @@
+.gallery-grid{
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 1px;
+}
+
+.gallery-item{
+    aspect-ratio: 1 / 1;
+    height: auto;
+    width: auto;
+    margin-bottom: 1px;
+}
