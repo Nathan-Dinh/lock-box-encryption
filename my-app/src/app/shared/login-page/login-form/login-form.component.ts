@@ -45,7 +45,7 @@ export class LoginFormComponent {
         if (this.userForm.value.keepMeLoggedIn) {
           this.ceService.setUserCookie(USER)
         }
-        this.route.navigate(['/home/gallery'])
+        this.route.navigate(['/home'])
       } else this.errorMessage = 'User could not be found'
     } else
       this.errorMessage =

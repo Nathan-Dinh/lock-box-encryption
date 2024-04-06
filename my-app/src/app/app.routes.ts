@@ -15,6 +15,12 @@ export const routes: Routes = [
     component: HomeComponent,
     children: [
       {
+        path: '',
+        component: EncryptionComponent,
+        title: 'Home',
+        canActivate: [authGuard],
+      },
+      {
         path: 'gallery',
         component: GalleryComponent,
         title: 'Gallery',
@@ -58,9 +64,9 @@ export const routes: Routes = [
     component: LoginComponent,
     title: 'Login',
   },
-  { path: '', redirectTo: 'home/gallery', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: '**',
-    redirectTo: 'home/gallery',
+    redirectTo: 'home',
   },
 ]
