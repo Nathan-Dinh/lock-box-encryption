@@ -3,7 +3,7 @@ import { LoginComponent } from './pages/login/login.component'
 import { authGuard } from '../services/auth/auth.guard'
 import { CreateUserComponent } from './pages/create-new-user/create-user.component'
 import { HomeComponent } from './pages/home/home.component'
-import { EncryptionComponent } from './pages/home/encryption/encryption.component'
+import { HomeContentComponent } from './pages/home/home/home.component'
 import { GalleryComponent } from './pages/home/gallery/gallery.component'
 import { AccountComponent } from './pages/home/account/account.component'
 import { CameraComponent } from './pages/home/camera/camera.component'
@@ -16,7 +16,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: EncryptionComponent,
+        component: HomeContentComponent,
         title: 'Home',
         canActivate: [authGuard],
       },
