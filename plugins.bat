@@ -5,6 +5,8 @@ call cordova platform add android
 @REM -----------------------------------------------------
 @REM call cordova plugin add cordova-plugin-geolocation
 call cordova plugin add cordova-plugin-camera
+call cordova plugin add cordova-plugin-file
+call cordova plugin add cordova-plugin-filepath
 @REM -----------------------------------------------------
 call cordova run android
 @REM call cordova platform rm android

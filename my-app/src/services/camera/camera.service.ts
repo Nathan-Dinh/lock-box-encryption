@@ -7,6 +7,25 @@ declare const navigator: any;
   providedIn: 'root'
 })
 export class CameraService {
+  private capturedImage: any;
+  capturedImages: any[] = [];
+
+  setCapturedImage(image: any): Promise<void> {
+    return new Promise((resolve, reject) => {
+      try {
+        this.capturedImage = image;
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+
+  getCapturedImage() {
+    return this.capturedImage;
+  }
+
   capturePhoto(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       let localData: any;
@@ -18,6 +37,7 @@ export class CameraService {
       }
       navigator.camera.getPicture((data: any) => {
         localData = "data:image/jpeg;base64," + data;
+        this.capturedImages.push(localData);
         resolve(localData)
       }, (e: any) => {
         console.log("CameraService: error in capture")
@@ -44,6 +64,11 @@ export class CameraService {
 
     });
   }
+
+  getCapturedImages() {
+    return this.capturedImages;
+  }
+
   constructor() {
   }
 }

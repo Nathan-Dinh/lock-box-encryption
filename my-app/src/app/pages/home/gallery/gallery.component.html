@@ -1,1 +1,10 @@
-<p>gallery works!</p>
+<div class="gallery-container" *ngIf="images.length > 0">
+  <div *ngFor="let image of images">
+    <img [src]="image" alt="Captured image">
+  </div>
+</div>
+
+<div *ngIf="images.length <= 0">
+  <h1 style="text-align: center">No Photos</h1>
+</div>
+
