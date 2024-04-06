@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden; /* Hide overflow to prevent content from showing before animation */
-    animation: grow 0.5s ease-in-out forwards;
+    animation: grow 0.3s ease-in-out forwards;
   }
 
   @keyframes grow {
@@ -15,6 +15,5 @@
     }
     to {
         transform: scale(1);
-        height: 100%;
     }
   }
