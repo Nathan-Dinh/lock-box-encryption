@@ -3,7 +3,7 @@ import { LoginComponent } from './pages/login/login.component'
 import { authGuard } from '../services/auth/auth.guard'
 import { CreateUserComponent } from './pages/create-new-user/create-user.component'
 import { HomeComponent } from './pages/home/home.component'
-import { EncryptionComponent } from './pages/home/encryption/encryption.component'
+import { HomeContentComponent } from './pages/home/home/home.component'
 import { GalleryComponent } from './pages/home/gallery/gallery.component'
 import { AccountComponent } from './pages/home/account/account.component'
 import { CameraComponent } from './pages/home/camera/camera.component'
@@ -15,6 +15,12 @@ export const routes: Routes = [
     component: HomeComponent,
     children: [
       {
+        path: '',
+        component: HomeContentComponent,
+        title: 'Home',
+        canActivate: [authGuard],
+      },
+      {
         path: 'gallery',
         component: GalleryComponent,
         title: 'Gallery',
@@ -24,12 +30,6 @@ export const routes: Routes = [
         path: 'account',
         component: AccountComponent,
         title: 'Account',
-        canActivate: [authGuard],
-      },
-      {
-        path: 'encryption',
-        component: EncryptionComponent,
-        title: 'Encryption',
         canActivate: [authGuard],
       },
       {
@@ -58,9 +58,9 @@ export const routes: Routes = [
     component: LoginComponent,
     title: 'Login',
   },
-  { path: '', redirectTo: 'home/gallery', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: '**',
-    redirectTo: 'home/gallery',
+    redirectTo: 'home',
   },
 ]
