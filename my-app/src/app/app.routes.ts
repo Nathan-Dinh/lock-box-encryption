@@ -7,6 +7,7 @@ import { EncryptionComponent } from './pages/home/encryption/encryption.componen
 import { GalleryComponent } from './pages/home/gallery/gallery.component'
 import { AccountComponent } from './pages/home/account/account.component'
 import { CameraComponent } from './pages/home/camera/camera.component'
+import { PictureContentComponent } from './pages/home/picture-content/picture-content.component'
 
 export const routes: Routes = [
   {
@@ -29,6 +30,12 @@ export const routes: Routes = [
         path: 'encryption',
         component: EncryptionComponent,
         title: 'Encryption',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'picture-content',
+        component: PictureContentComponent,
+        title: 'Picture Content',
         canActivate: [authGuard],
       },
       {

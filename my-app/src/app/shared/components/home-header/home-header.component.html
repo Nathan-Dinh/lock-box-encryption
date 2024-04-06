@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="home-navbar navbar bg-light fixed-top position-sticky" [ngClass]="{'fade-out': isNavHidden}" >
     <div class="container-fluid">
       <br/>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,7 +11,7 @@
           </li>
           <hr>
           <li>
-            <a class="nav-link active" href="#">Signout</a>
+            <a class="nav-link active">Signout</a>
           </li>
         </ul>
       </div>
