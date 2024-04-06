@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GalleryItemLocationService {
-  private serviceProvider: Subject<object> = new Subject<object>();
+  private serviceProvider: BehaviorSubject<object> =
+    new BehaviorSubject<object>(new Object())
 
-  setLocation(data : object){
+  setCoordinates(data: object) {
     this.serviceProvider.next(data)
   }
 
-  sendLocation(){
-    return this.serviceProvider.asObservable() 
+  getCoordinates() {
+    return this.serviceProvider.asObservable()
   }
 }
