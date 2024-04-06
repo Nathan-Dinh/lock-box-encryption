@@ -1,11 +1,5 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  inject,
-} from '@angular/core'
+import { Component, ElementRef, NgZone, OnInit, inject } from '@angular/core'
 import { GalleryItemLocationService } from '../../../../services/gallery-item-location.service'
-import { trigger } from '@angular/animations'
 
 @Component({
   selector: 'picture-content',
@@ -14,30 +8,22 @@ import { trigger } from '@angular/animations'
   templateUrl: './picture-content.component.html',
   styleUrl: './picture-content.component.css',
 })
-export class PictureContentComponent{
-  gilService = inject(GalleryItemLocationService)
-  private xAimOrigin  = 0
-  private yAimOrigin  = 0
-  message = "Hello world"
+export class PictureContentComponent implements OnInit {
+  private gilService = inject(GalleryItemLocationService)
+  private xAimOrigin : number
+  private yAimOrigin : number
 
-  constructor(private el: ElementRef) {}
-
-  ngOnInit(): void {
-    this.gilService.sendLocation().subscribe((data: any) => {
-      this.xAimOrigin = data.x
-      this.yAimOrigin = data.y
-      this.processData()
-      console.log(this.xAimOrigin)
-      console.log(this.yAimOrigin)
-      const navtiveElement = this.el.nativeElement.querySelector(
-        'div'
-      ) as HTMLElement
-      navtiveElement.style.transformOrigin = `${this.xAimOrigin}px ${this.yAimOrigin}px`
-    })
+  constructor(private el: ElementRef) {
+    this.xAimOrigin = 0
+    this.yAimOrigin = 0
   }
 
-  private processData() {
-    console.log("Trigger")
-    this.message = "Fuck the world"
+  ngOnInit(): void {
+    this.gilService.getCoordinates().subscribe((data: any) => {
+      this.xAimOrigin = data.x as number
+      this.yAimOrigin = data.y as number
+      const ELEMENT = this.el.nativeElement.querySelector( 'div') as HTMLElement
+      ELEMENT.style.transformOrigin = `${this.xAimOrigin}px ${this.yAimOrigin}px` 
+    })
   }
 }
