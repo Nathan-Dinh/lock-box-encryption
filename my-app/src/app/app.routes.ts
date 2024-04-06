@@ -33,12 +33,6 @@ export const routes: Routes = [
         canActivate: [authGuard],
       },
       {
-        path: 'encryption',
-        component: EncryptionComponent,
-        title: 'Encryption',
-        canActivate: [authGuard],
-      },
-      {
         path: 'picture-content',
         component: PictureContentComponent,
         title: 'Picture Content',
