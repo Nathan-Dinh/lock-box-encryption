@@ -1,17 +1,23 @@
-import { Component, HostListener  } from '@angular/core'
-import { CommonModule } from '@angular/common';
+import { Component, HostListener, Input } from '@angular/core'
+import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 
 @Component({
-  selector: 'home-header',
+  selector: 'top-header-nav',
   standalone: true,
-  imports: [RouterModule,CommonModule],
-  templateUrl: './home-header.component.html',
-  styleUrl: './home-header.component.css',
+  imports: [RouterModule, CommonModule],
+  templateUrl: './top-header-nav.component.html',
+  styleUrl: './top-header-nav.component.css',
 })
-export class HomeHeaderComponent {
-  isNavHidden = false;
-  lastScrollTop = 0;
+export class TopHeaderNavComponent {
+  @Input() headerTitle: string
+
+  isNavHidden = false
+  lastScrollTop = 0
+
+  constructor() {
+    this.headerTitle = ''
+  }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {

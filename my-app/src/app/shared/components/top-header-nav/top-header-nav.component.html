@@ -1,13 +1,18 @@
-<nav class="home-navbar navbar bg-light fixed-top position-sticky" [ngClass]="{'fade-out': isNavHidden}" >
+<nav class="home-navbar navbar bg-light fixed-top position-sticky py-3" [ngClass]="{'fade-out': isNavHidden}" >
     <div class="container-fluid">
-      <br/>
+      <br>
+      <div>
+        <strong>
+          {{headerTitle}}
+        </strong>
+      </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span> <i class="bi bi-list"></i></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" routerLink="account" routerLinkActive="active">Account</a>
+            <a class="nav-link active" routerLink="/home/account" routerLinkActive="active">Account</a>
           </li>
           <hr>
           <li>

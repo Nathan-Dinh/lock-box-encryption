@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { CameraService } from '../../../../services/camera/camera.service'
+import { TopHeaderNavComponent } from '../../../shared/components/top-header-nav/top-header-nav.component';
 import { NgForOf, NgIf } from '@angular/common'
 
 @Component({
@@ -8,15 +9,14 @@ import { NgForOf, NgIf } from '@angular/common'
   imports: [
     NgIf,
     NgForOf,
+    TopHeaderNavComponent
   ],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.css'
 })
 export class GalleryComponent implements OnInit {
   images: any[] = [];
-
   constructor(private cameraService: CameraService) {}
-
   ngOnInit() {
     this.images = this.cameraService.getCapturedImages();
   }
