@@ -1,4 +1,5 @@
-import { Component, HostListener, Input } from '@angular/core'
+import { Component, HostListener, Input, inject } from '@angular/core'
+import { UserCookieEncryptionService } from '../../../../services/crypto/user-cookie-encryption.service'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 
@@ -11,6 +12,7 @@ import { RouterModule } from '@angular/router'
 })
 export class TopHeaderNavComponent {
   @Input() headerTitle: string
+  uceService = inject(UserCookieEncryptionService)
 
   isNavHidden = false
   lastScrollTop = 0
@@ -28,5 +30,9 @@ export class TopHeaderNavComponent {
       this.isNavHidden = false
     }
     this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop
+  }
+
+  signOutClickHandler() {
+    this.uceService.deleteUserCookie()
   }
 }

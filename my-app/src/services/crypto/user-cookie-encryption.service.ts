@@ -12,6 +12,7 @@ export class UserCookieEncryptionService {
 
 
   setUserCookie(user : User){
+    this.cService.delete("session")
     const C_BODY: string = user.userName + '-' + user.password
     const C_Name: string = 'session'
     this.cService.set(C_Name, this.encryptCookie(C_BODY))

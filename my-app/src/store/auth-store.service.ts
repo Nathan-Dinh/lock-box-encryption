@@ -30,7 +30,7 @@ export class AuthControlService {
 
   authorizedUser(user: User): Promise<boolean> {
     return this.uDalService.findUser(user.userName).then((data) => {
-      if (data !== null) {
+      if (data !== null && data.password === user.password) {
         return true
       } else {
         return false
