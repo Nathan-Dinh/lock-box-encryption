@@ -8,6 +8,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms'
+import { TopHeaderNavComponent } from '../../../shared/components/top-header-nav/top-header-nav.component'
 import { Router } from '@angular/router'
 import { UserDalService } from '../../../../services/database/user.dal.service'
 import { UserCookieEncryptionService } from '../../../../services/crypto/user-cookie-encryption.service'
@@ -15,7 +16,7 @@ import { UserCookieEncryptionService } from '../../../../services/crypto/user-co
 @Component({
   selector: 'account-page',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule,TopHeaderNavComponent],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
 })
