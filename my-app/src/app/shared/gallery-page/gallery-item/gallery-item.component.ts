@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, inject } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { CommonModule } from '@angular/common'
-import { GalleryItemLocationService } from '../../../../services/gallery-item-location.service'
+import { GalleryItemLocationService } from '../../../../services/observable/gallery-item-location.service'
 
 @Component({
   selector: 'gallery-item',
@@ -15,7 +15,8 @@ export class GalleryItemComponent {
   constructor(private el: ElementRef) {}
 
   onClick() {
-    const COORDINATES : object = this.el.nativeElement.getBoundingClientRect() as object
+    const COORDINATES: object =
+      this.el.nativeElement.getBoundingClientRect() as object
     this.gilService.setCoordinates(COORDINATES)
   }
 }

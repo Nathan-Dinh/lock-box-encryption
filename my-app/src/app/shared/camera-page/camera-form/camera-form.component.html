@@ -1,0 +1,10 @@
+<form [formGroup]="itemForm" class="container">
+    <div class="form-group">
+        <label class="form-label" for="description">Description</label>
+        <textarea class="form-control" name="description" id="description" formControlName="description" rows="4"> </textarea>
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="date">Date</label>
+        <input type="date" name="date" class="form-control" formControlName="date" >
+    </div>
+</form>

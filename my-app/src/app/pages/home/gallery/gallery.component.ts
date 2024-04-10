@@ -15,7 +15,7 @@ import { NgForOf, NgIf } from '@angular/common'
   styleUrl: './gallery.component.css'
 })
 export class GalleryComponent implements OnInit {
-  images: any[] = [];
+  public images: any[] = [];
   constructor(private cameraService: CameraService) {}
   ngOnInit() {
     this.images = this.cameraService.getCapturedImages();

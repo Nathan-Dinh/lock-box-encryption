@@ -5,8 +5,8 @@ import { TopHeaderNavComponent } from '../../../shared/components/top-header-nav
   selector: 'home-content',
   standalone: true,
   imports: [TopHeaderNavComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  templateUrl: './home-content.component.html',
+  styleUrl: './home-content.component.css'
 })
 export class HomeContentComponent {
 
