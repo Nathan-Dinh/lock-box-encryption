@@ -1,5 +1,5 @@
 import { Component, ElementRef, NgZone, OnInit, inject } from '@angular/core'
-import { GalleryItemLocationService } from '../../../../services/gallery-item-location.service'
+import { GalleryItemLocationService } from '../../../../services/observable/gallery-item-location.service'
 
 @Component({
   selector: 'picture-content',
