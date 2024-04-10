@@ -25,7 +25,7 @@ export class DatabaseService {
           autoIncrement: true,
         });
         this.db.createObjectStore("user_gallery", {
-          keyPath: "id",
+          keyPath: "userName",
           autoIncrement: true,
         });
       }
