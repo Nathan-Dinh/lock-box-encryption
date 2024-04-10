@@ -1,10 +1,10 @@
 <top-header-nav headerTitle="Gallery"></top-header-nav>
-<div class="gallery-container" *ngIf="images.length > 0">
-  <div *ngFor="let image of images">
-    <img [src]="image" alt="Captured image">
+<div class="gallery-container" *ngIf="galleries.length > 0">
+  <div *ngFor="let gallery of galleries" style="border: 2px solid red; margin: 10px;">
+    <img [src]="gallery.imageData" alt="Captured image">
   </div>
 </div>
-<div *ngIf="images.length <= 0">
+<div *ngIf="galleries.length <= 0">
   <h1 style="text-align: center">No Photos</h1>
 </div>
 

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { CameraService } from '../../../../services/camera/camera.service'
-import { TopHeaderNavComponent } from '../../../shared/components/top-header-nav/top-header-nav.component';
+import { TopHeaderNavComponent } from '../../../shared/components/top-header-nav/top-header-nav.component'
 import { NgForOf, NgIf } from '@angular/common'
+import { Gallery } from '../../../../models/gallery.model'
 
 @Component({
   selector: 'gallery-sub-page',
@@ -9,15 +10,23 @@ import { NgForOf, NgIf } from '@angular/common'
   imports: [
     NgIf,
     NgForOf,
-    TopHeaderNavComponent
+    TopHeaderNavComponent,
   ],
   templateUrl: './gallery.component.html',
-  styleUrl: './gallery.component.css'
+  styleUrl: './gallery.component.css',
 })
 export class GalleryComponent implements OnInit {
-  images: any[] = [];
-  constructor(private cameraService: CameraService) {}
-  ngOnInit() {
-    this.images = this.cameraService.getCapturedImages();
+  galleries: Gallery[] = []
+
+  constructor(private cameraService: CameraService) {
+
+  }
+
+  async ngOnInit() {
+    try {
+      this.galleries = await this.cameraService.getCapturedImages()
+    } catch (e) {
+      console.error('Error loading images', e)
+    }
   }
 }
