@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core'
+import { CameraFormComponent } from '../../../shared/camera-page/camera-form/camera-form.component'
 import { CameraService } from '../../../../services/camera/camera.service'
 import { GalleryDalService } from '../../../../services/database/gallery.dal.service'
 import { FormsModule } from '@angular/forms'
