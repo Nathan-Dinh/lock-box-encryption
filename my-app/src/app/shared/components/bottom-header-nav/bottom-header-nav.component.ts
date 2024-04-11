@@ -10,9 +10,8 @@ import { CameraService } from '../../../../services/camera/camera.service'
   styleUrl: './bottom-header-nav.component.css',
 })
 export class BottomHeaderNavComponent {
-  //imgsrc: any
-  cameraService = inject(CameraService)
-  router = inject(Router)
+  private cameraService = inject(CameraService)
+  private router = inject(Router)
 
   onCapturePhotoClick() {
     localStorage.removeItem('photo');
