@@ -1,6 +1,4 @@
-import { inject, Injectable } from '@angular/core'
-import { GalleryDalService } from '../database/gallery.dal.service';
-import { Gallery } from '../../models/gallery.model'
+import { Injectable } from '@angular/core'
 declare const Camera: any;
 declare const navigator: any;
 
@@ -8,6 +6,9 @@ declare const navigator: any;
   providedIn: 'root'
 })
 export class CameraService {
+
+  constructor() {
+  }
 
   setCapturedImage(image: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -19,7 +20,6 @@ export class CameraService {
       }
     });
   }
-
 
   getCapturedImage() : string | null {
     return localStorage.getItem('photo');
@@ -44,6 +44,7 @@ export class CameraService {
       }, options)
     });
   }
+
   //
   // loadPhotoFromLibrary(): Promise<any> {
   //   return new Promise<any>((resolve, reject) => {
@@ -64,17 +65,13 @@ export class CameraService {
   //   });
   // }
 
-  async getCapturedImages(): Promise<Gallery[]> {
-    try {
-      const galleries = await this.galleryDalService.retrieveGalleries();
-      return galleries;
-    } catch (error) {
-      console.error('Error getting captured images', error);
-      return [];
-    }
-  }
-
-
-  constructor(private galleryDalService: GalleryDalService) {
-  }
+  // async getCapturedImages(): Promise<Gallery[]> {
+  //   try {
+  //     const galleries = await this.galleryDalService.retrieveGalleries();
+  //     return galleries;
+  //   } catch (error) {
+  //     console.error('Error getting captured images', error);
+  //     return [];
+  //   }
+  // }
 }
