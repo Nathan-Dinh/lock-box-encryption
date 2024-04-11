@@ -18,11 +18,10 @@ import { FormsModule } from '@angular/forms'
 
 export class CameraComponent {
   private cameraService = inject(CameraService)
-  public imgsrc: any
+  public imgsrc: string
 
   constructor() {
-    alert("Trigger")
-    this.imgsrc = this.cameraService.getCapturedImage()
+    this.imgsrc = this.cameraService.getCapturedImage() as string
   }
   
 }
