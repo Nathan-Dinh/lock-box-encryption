@@ -1,11 +1,17 @@
-export class PictureItem{
-    private picture: string
-    private description: string
-    private date: string
+export class PictureItem {
+  private id: string
+  private imgData: string
+  private description: string
+  private date: Date
 
-    constructor(picture: string, description: string, date: string){
-        this.picture = picture
-        this.description = description
-        this.date = date
-    }
+  constructor(imgData: string, description: string, date: Date, id: string) {
+    this.id = id
+    this.imgData = imgData
+    this.description = description
+    this.date = date
+  }
+
+  getId(): string{
+    return this.id
+  }
 }
