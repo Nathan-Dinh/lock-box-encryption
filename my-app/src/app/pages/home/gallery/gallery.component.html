@@ -1,7 +1,8 @@
 <top-header-nav headerTitle="Gallery"></top-header-nav>
 <div class="gallery-container" *ngIf="galleries.length > 0">
-  <div *ngFor="let gallery of galleries" style="border: 2px solid red; margin: 10px;">
+  <div *ngFor="let gallery in galleries" style="border: 2px solid red; margin: 10px;">
     <img [src]="gallery.imageData" alt="Captured image">
+    das
   </div>
 </div>
 <div *ngIf="galleries.length <= 0">
