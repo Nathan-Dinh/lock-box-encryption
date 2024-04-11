@@ -3,32 +3,32 @@ import { TopHeaderNavComponent } from '../../../shared/components/top-header-nav
 import { UserDalService } from '../../../../services/database/user.dal.service'
 import { UserInfoService } from '../../../../store/user-info-store.service'
 import { NgForOf, NgIf } from '@angular/common'
-import { GalleryItemComponent } from '../../../shared/gallery-page/gallery-item/gallery-item.component'
+import { RouterLink } from '@angular/router'
 
 @Component({
   selector: 'gallery-sub-page',
   standalone: true,
-  imports: [NgIf, NgForOf, TopHeaderNavComponent],
+  imports: [NgIf, NgForOf, TopHeaderNavComponent,RouterLink],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.css',
 })
 export class GalleryComponent implements OnInit {
   private uiDalService = inject(UserDalService)
   private uiService = inject(UserInfoService)
-  galleries: any = {}
+  public picList: any
 
   constructor() {
+    this.picList = {}
   }
 
   async ngOnInit() {
-    this.uiDalService.findUser(this.uiService.getUserName()).then((data) => {
-      this.galleries = data.userGallery
-    })
-    console.log(this.galleries)
-    // try {
-    //   this.galleries = await this.cameraService.getCapturedImages()
-    // } catch (e) {
-    //   alert('Error loading images', e)
-    // }
+    const OBJECT_VALUES = await this.uiDalService
+      .find(this.uiService.getUserName())
+      .then((data) => {
+        return data.userGallery
+      })
+    this.picList = Object.values(OBJECT_VALUES)
   }
+
+  
 }
