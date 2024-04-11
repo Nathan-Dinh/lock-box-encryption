@@ -21,20 +21,24 @@ import { UserInfoService } from '../../../../store/user-info-store.service'
 })
 export class LoginFormComponent {
   private ceService = inject(UserCookieEncryptionService)
-  private cService = inject(CookieService)
   private authControl = inject(AuthControlService)
   private route = inject(Router)
   private frmBuilder = inject(FormBuilder)
   private uiService = inject(UserInfoService)
-  public errorMessage: string = ''
+  public errorMessage: string
 
-  public userForm = this.frmBuilder.group({
-    userName: ['', [Validators.required]],
-    password: ['', [Validators.required]],
-    keepMeLoggedIn: ['', []],
-  })
+  public userForm: any
 
-  async onSubmitHandler() {
+  constructor() {
+    this.errorMessage = ''
+    this.userForm = this.frmBuilder.group({
+      userName: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      keepMeLoggedIn: ['', []],
+    })
+  }
+
+ public async onSubmitHandler() {
     if (this.userForm.valid) {
       const USER_NAME: string = this.userForm.value.userName as string
       const PASSWORD: string = this.userForm.value.password as string
@@ -52,4 +56,3 @@ export class LoginFormComponent {
         'There was a issue. Verify if field values are correct'
   }
 }
-1

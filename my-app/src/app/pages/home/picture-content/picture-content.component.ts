@@ -1,29 +1,16 @@
-import { Component, ElementRef, NgZone, OnInit, inject } from '@angular/core'
-import { GalleryItemLocationService } from '../../../../services/observable/gallery-item-location.service'
+import { Component, OnInit } from '@angular/core'
+import { TopHeaderNavComponent } from '../../../shared/picture-content-page/top-header-nav/top-header-nav.component'
 
 @Component({
   selector: 'picture-content',
   standalone: true,
-  imports: [],
+  imports: [TopHeaderNavComponent],
   templateUrl: './picture-content.component.html',
   styleUrl: './picture-content.component.css',
 })
 export class PictureContentComponent implements OnInit {
-  private gilService = inject(GalleryItemLocationService)
-  private xAimOrigin : number
-  private yAimOrigin : number
-
-  constructor(private el: ElementRef) {
-    this.xAimOrigin = 0
-    this.yAimOrigin = 0
+  constructor() {
   }
-
   ngOnInit(): void {
-    this.gilService.getCoordinates().subscribe((data: any) => {
-      this.xAimOrigin = data.x as number
-      this.yAimOrigin = data.y as number
-      const ELEMENT = this.el.nativeElement.querySelector( 'div') as HTMLElement
-      ELEMENT.style.transformOrigin = `${this.xAimOrigin}px ${this.yAimOrigin}px` 
-    })
   }
 }

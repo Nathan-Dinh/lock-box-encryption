@@ -16,7 +16,7 @@ import { UserCookieEncryptionService } from '../../../../services/crypto/user-co
 @Component({
   selector: 'account-page',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule,TopHeaderNavComponent],
+  imports: [FormsModule, ReactiveFormsModule, TopHeaderNavComponent],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
 })
@@ -28,56 +28,67 @@ export class AccountComponent {
     UserCookieEncryptionService
   )
   private router: Router = inject(Router)
-  public user: User = this.uiService.getUser()
-  public showPassword: boolean = false
-  public updateMode: boolean = false
+  public user: User
+  public showPassword: boolean
+  public updateMode: boolean
+  public accFrm: any
+  private passControl: FormControl
 
-  public accFrm = this.builder.group({
-    userName: new FormControl(
-      { value: this.user.userName, disabled: true },
-      Validators.required
-    ),
-    password: new FormControl(
-      { value: this.user.password, disabled: true },
-      Validators.required
-    ),
-  })
+  constructor() {
+    this.user = this.uiService.getUser()
+    this.showPassword = false
+    this.updateMode = false
 
-  private passControl: FormControl = this.accFrm.controls['password']
+    this.accFrm = this.builder.group({
+      userName: new FormControl(
+        { value: this.user.userName, disabled: true },
+        Validators.required
+      ),
+      password: new FormControl(
+        { value: this.user.password, disabled: true },
+        Validators.required
+      ),
+    })
+    this.passControl = this.accFrm.controls['password']
+  }
 
-  showPasswordClickHandler() {
+  public showPasswordClickHandler() {
     this.showPassword = !this.showPassword
   }
 
-  updatePasswordClickHandler() {
+  public updatePasswordClickHandler() {
     this.showPassword = true
     this.passControl.enable()
     this.updateMode = true
   }
 
-  cancelClickHandler() {
+  public cancelClickHandler() {
     this.showPassword = false
     this.passControl.disable()
     this.updateMode = false
   }
 
-  deleteUser() {
-    if(confirm("Continuing will delete all data pertaining to user. Would you like to continue?")){
+  public deleteUser() {
+    if (
+      confirm(
+        'Continuing will delete all data pertaining to user. Would you like to continue?'
+      )
+    ) {
       this.uDalService.delete(this.user)
       this.ceService.deleteUserCookie()
-      alert("User has been successfully deleted")
+      alert('User has been successfully deleted')
       this.router.navigate(['login'])
     }
   }
 
-  updateUser() {
-    if(confirm("Is this the password you want to use?")){
+  public updateUser() {
+    if (confirm('Is this the password you want to use?')) {
       this.user.password = this.passControl.value
       this.uDalService.update(this.user)
       this.ceService.setUserCookie(this.user)
       this.uiService.resetUserValue(this.user.userName)
       this.cancelClickHandler()
-      alert("Password has been changed")
+      alert('Password has been changed')
     }
   }
 }

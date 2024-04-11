@@ -10,11 +10,11 @@ import { CameraService } from '../../../../services/camera/camera.service'
   styleUrl: './bottom-header-nav.component.css',
 })
 export class BottomHeaderNavComponent {
-  imgsrc: any
-  cameraService = inject(CameraService)
-  router = inject(Router)
+  private cameraService = inject(CameraService)
+  private router = inject(Router)
 
   onCapturePhotoClick() {
+    localStorage.removeItem('photo');
     this.cameraService
       .capturePhoto()
       .then((data) => {
@@ -24,11 +24,13 @@ export class BottomHeaderNavComponent {
             this.router.navigate(['home/camera'])
           })
           .catch((e) => {
-            alert('setCapturedImage error: ' + e.toString())
+            alert('setCapturedImage error: ' + e.toString());
+            localStorage.removeItem('photo');
           })
       })
       .catch((e) => {
-        alert('capturePhoto error: ' + e.toString())
+        //alert('capturePhoto error: ' + e.toString());
+        localStorage.removeItem('photo');
       })
   }
 }

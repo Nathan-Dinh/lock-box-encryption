@@ -22,31 +22,37 @@ export class CreateUserFormComponent {
   private frmBuilder = inject(FormBuilder)
   private userDal = inject(UserDalService)
   private router = inject(Router)
+  public createUserForm: any
+  public refUserName: FormControl
+  public refPassword1: FormControl
+  public refPassword2: FormControl
 
-  createUserForm = this.frmBuilder.group({
-    userName: ['', [Validators.required]],
-    passwordGroup: this.frmBuilder.group(
-      {
-        password1: ['', [Validators.required]],
-        password2: ['', [Validators.required]],
-      },
-      { validators: this.matchPassword }
-    ),
-  })
+  constructor() {
+    this.createUserForm = this.frmBuilder.group({
+      userName: ['', [Validators.required]],
+      passwordGroup: this.frmBuilder.group(
+        {
+          password1: ['', [Validators.required]],
+          password2: ['', [Validators.required]],
+        },
+        { validators: this.matchPassword }
+      ),
+    })
+    this.refUserName = this.createUserForm.controls['userName']
+    this.refPassword1 =
+      this.createUserForm.controls['passwordGroup'].controls['password1']
+    this.refPassword2 =
+      this.createUserForm.controls['passwordGroup'].controls['password2']
+  }
 
-  refUserName: FormControl = this.createUserForm.controls['userName']
-  refPassword1: FormControl =
-    this.createUserForm.controls['passwordGroup'].controls['password1']
-  refPassword2: FormControl =
-    this.createUserForm.controls['passwordGroup'].controls['password2']
-
-  onSubmitHandler() {
+  public onSubmitHandler() {
     if (this.createUserForm.valid) {
       try {
         const USER_NAME: string = this.createUserForm.value.userName as string
-        const PASSWORD: string = this.createUserForm.value.passwordGroup?.password1 as string
+        const PASSWORD: string = this.createUserForm.value.passwordGroup
+          ?.password1 as string
         const USER: User = new User(USER_NAME, PASSWORD)
-        this.userDal.findUser(USER.userName).then((user) => {
+        this.userDal.find(USER.userName).then((user) => {
           if (user === null) {
             this.userDal.insert(USER)
             this.router.navigate(['/login'])
@@ -62,9 +68,9 @@ export class CreateUserFormComponent {
     }
   }
 
-  matchPassword(control: AbstractControl) {
+  public matchPassword(control: AbstractControl) {
     let password1: FormControl = control.get('password1') as FormControl
-    let password2: FormControl  = control.get('password2') as FormControl
+    let password2: FormControl = control.get('password2') as FormControl
     if (
       password1?.value != '' &&
       password2?.value != '' &&
