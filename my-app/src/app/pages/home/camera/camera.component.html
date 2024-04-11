@@ -1,27 +1,5 @@
-<div class="text-center m-3">
 <top-header-nav></top-header-nav>
 <div class="text-center container">
-  <img [src]="imgsrc" width="80%" alt="Image placeholder">
-
-  <form (ngSubmit)="savePhoto()" class="p-5">
-    <div class="mb-3">
-      <label class="form-label" for="title">Title</label>
-      <input class="form-control" type="text" id="title" name="title" [(ngModel)]="title" placeholder="Title" required>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label" for="date">Date</label>
-      <input class="form-control" type="date" id="date" name="date" [(ngModel)]="date" required>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label" for="description">Description</label>
-      <textarea class="form-control" id="description" name="description" [(ngModel)]="description" placeholder="Description"></textarea>
-    </div>
-
-    <div class="d-flex justify-content-center">
-      <button type="submit" class="btn btn-primary mx-1">Save</button>
-    </div>
-  </form>
+  <img [src]="imgsrc" width="80%" alt="Image placeholder" />
 </div>
-<camera-form></camera-form>
+<camera-form [imgsrc]="imgsrc"></camera-form>
