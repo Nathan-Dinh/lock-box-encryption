@@ -20,6 +20,10 @@ export class UserInfoService {
     this.user = user as User
   }
 
+  getUserName(){
+    return this.user.userName
+  }
+
   getUser() {
     return this.user
   }
