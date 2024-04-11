@@ -1,32 +1,34 @@
-import { Component, OnInit } from '@angular/core'
-import { CameraService } from '../../../../services/camera/camera.service'
+import { Component, OnInit, inject } from '@angular/core'
 import { TopHeaderNavComponent } from '../../../shared/components/top-header-nav/top-header-nav.component'
+import { UserDalService } from '../../../../services/database/user.dal.service'
+import { UserInfoService } from '../../../../store/user-info-store.service'
 import { NgForOf, NgIf } from '@angular/common'
-import { Gallery } from '../../../../models/gallery.model'
+import { GalleryItemComponent } from '../../../shared/gallery-page/gallery-item/gallery-item.component'
 
 @Component({
   selector: 'gallery-sub-page',
   standalone: true,
-  imports: [
-    NgIf,
-    NgForOf,
-    TopHeaderNavComponent,
-  ],
+  imports: [NgIf, NgForOf, TopHeaderNavComponent],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.css',
 })
 export class GalleryComponent implements OnInit {
-  galleries: Gallery[] = []
+  private uiDalService = inject(UserDalService)
+  private uiService = inject(UserInfoService)
+  galleries: any = {}
 
-  constructor(private cameraService: CameraService) {
-
+  constructor() {
   }
 
   async ngOnInit() {
-    try {
-      this.galleries = await this.cameraService.getCapturedImages()
-    } catch (e) {
-      console.error('Error loading images', e)
-    }
+    this.uiDalService.findUser(this.uiService.getUserName()).then((data) => {
+      this.galleries = data.userGallery
+    })
+    console.log(this.galleries)
+    // try {
+    //   this.galleries = await this.cameraService.getCapturedImages()
+    // } catch (e) {
+    //   alert('Error loading images', e)
+    // }
   }
 }
