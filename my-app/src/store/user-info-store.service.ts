@@ -10,21 +10,21 @@ export class UserInfoService {
   private uDalService = inject(UserDalService)
   private user: User = new User('', '')
 
-  resetUserValue(username : string){
-     this.uDalService.findUser(username).then(data =>{
+  public resetUserValue(username: string) {
+    this.uDalService.find(username).then((data) => {
       this.user = data as User
     })
   }
 
-  setUser(user: User) {
+  public setUser(user: User) {
     this.user = user as User
   }
 
-  getUserName(){
+  public getUserName() {
     return this.user.userName
   }
 
-  getUser() {
+  public getUser() {
     return this.user
   }
 }
