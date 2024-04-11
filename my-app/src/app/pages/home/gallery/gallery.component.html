@@ -1,11 +1,12 @@
 <top-header-nav headerTitle="Gallery"></top-header-nav>
-<div class="gallery-container" *ngIf="galleries.length > 0">
-  <div *ngFor="let gallery in galleries" style="border: 2px solid red; margin: 10px;">
-    <img [src]="gallery.imageData" alt="Captured image">
-    das
+<div class="gallery-container" *ngIf="picList.length > 0">
+  <div *ngFor="let pic of picList" style="border: 2px solid red; margin: 10px;">
+    <a routerLink="/home/picture-content" routerLinkActive="active">
+      <img [src]="pic.imgData" alt="Captured image">
+    </a>
   </div>
 </div>
-<div *ngIf="galleries.length <= 0">
+<div *ngIf="picList.length <= 0">
   <h1 style="text-align: center">No Photos</h1>
 </div>
 
