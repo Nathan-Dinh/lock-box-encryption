@@ -14,21 +14,26 @@ import { Router } from '@angular/router'
   styleUrl: './camera-form.component.css',
 })
 export class CameraFormComponent {
-  @Input() imgsrc: string = ''
+  @Input() imgsrc: string
   private frmBuilder = inject(FormBuilder)
   private router = inject(Router)
   private uiService = inject(UserInfoService)
   private ugDalService = inject(UserGalleryDalService)
+  public itemForm: any
+  public des: FormControl
+  public date: FormControl
 
-  public itemForm = this.frmBuilder.group({
-    description: ['', []],
-    date: new FormControl({ value: this.setCurrentDate(), disabled: true }),
-  })
+  constructor() {
+    this.imgsrc = ''
+    this.itemForm = this.frmBuilder.group({
+      description: ['', []],
+      date: new FormControl({ value: this.setCurrentDate(), disabled: true }),
+    })
+    this.des = this.itemForm.controls['description'] as FormControl
+    this.date = this.itemForm.controls['date'] as FormControl
+  }
 
-  public des = this.itemForm.controls['description'] as FormControl
-  public date = this.itemForm.controls['date'] as FormControl
-
-  setCurrentDate() {
+  public setCurrentDate() {
     const today = new Date()
     const year = today.getFullYear()
     const month = String(today.getMonth() + 1).padStart(2, '0') // January is 0!
@@ -36,7 +41,7 @@ export class CameraFormComponent {
     return `${year}-${month}-${day}`
   }
 
-  savePhoto(): void {
+  public savePhoto(): void {
     const ID = 'id' + Math.random().toString(16).slice(2)
     const DES_VALUE = this.des.value
 
