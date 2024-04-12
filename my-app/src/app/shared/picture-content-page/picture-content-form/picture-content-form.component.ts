@@ -76,6 +76,7 @@ export class PictureContentFormComponent implements OnInit {
       const ITEM = new PictureItem(
         this.pictureItem.imgData,
         this.desControl.value,
+        "",
         this.pictureItem.date,
         this.pictureItem.id
       )
