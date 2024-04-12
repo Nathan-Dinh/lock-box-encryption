@@ -33,8 +33,7 @@ export class LoginFormComponent {
     this.errorMessage = ''
     this.userForm = this.frmBuilder.group({
       userName: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      keepMeLoggedIn: ['', []],
+      password: ['', [Validators.required]]
     })
   }
 
@@ -46,9 +45,7 @@ export class LoginFormComponent {
       if (await this.authControl.authorizedUser(USER)) {
         this.uiService.setUser(USER)
         this.authControl.setAuth(true)
-        if (this.userForm.value.keepMeLoggedIn) {
-          this.ceService.setUserCookie(USER)
-        }
+        this.ceService.setUserCookie(USER)
         this.route.navigate(['/home'])
       } else this.errorMessage = 'User could not be found'
     } else
