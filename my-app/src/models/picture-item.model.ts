@@ -14,4 +14,18 @@ export class PictureItem {
   getId(): string{
     return this.id
   }
+
+  getDescription(): string{
+    return this.description
+  }
+  
+  getDate(): Date{
+    return this.date
+  }
+
+  getImgDate(): string{
+    return this.imgData
+  }
+
+
 }

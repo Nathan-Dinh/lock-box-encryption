@@ -1,0 +1,16 @@
+<div class="text-center container">
+    <img [src]="imgSrc" width="80%" alt="Image placeholder" />
+</div>
+<form [formGroup]="frmPicContent" class="container">
+    <div class="form-group">
+        <label class="form-label" for="description">Description</label>
+        <textarea class="form-control" name="description" formControlName="description" id="description" placeholder="Description" rows="4"> </textarea>
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="date">Date</label>
+        <input type="date" name="date" formControlName="date" class="form-control" >
+    </div>
+    <div class="py-1">
+        <button type="submit" class="btn btn-primary mx-1">Edit</button>
+    </div>
+</form>

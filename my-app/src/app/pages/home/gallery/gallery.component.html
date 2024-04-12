@@ -1,7 +1,7 @@
 <top-header-nav headerTitle="Gallery"></top-header-nav>
 <div class="gallery-container" *ngIf="picList.length > 0">
   <div *ngFor="let pic of picList" style="border: 2px solid red; margin: 10px;">
-    <a routerLink="/home/picture-content" routerLinkActive="active">
+    <a routerLink="/home/picture-content" [queryParams]="{id: pic.id}" routerLinkActive="active">
       <img [src]="pic.imgData" alt="Captured image">
     </a>
   </div>
