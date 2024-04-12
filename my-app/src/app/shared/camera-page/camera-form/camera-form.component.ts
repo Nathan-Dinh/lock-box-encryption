@@ -20,9 +20,6 @@ export class CameraFormComponent {
   private uiService = inject(UserInfoService)
   private ugDalService = inject(UserGalleryDalService)
   private geoService = inject(GeoService)
-  private position: any = undefined
-  private lat: any = undefined
-  private lon: any = undefined
 
   public itemForm: any
   public des: FormControl
@@ -63,7 +60,7 @@ export class CameraFormComponent {
   }
 
   public savePhoto(): void {
-    const ID = 'id' + Math.random().toString(16).slice(2)
+    const ID: string = 'id' + Math.random().toString(16).slice(2)
     const DES_VALUE = this.des.value
     const GEO_VALUE = this.geolocation.value
     const DATE_PARTS = this.date.value.split('-')
@@ -72,8 +69,13 @@ export class CameraFormComponent {
     const D = parseInt(DATE_PARTS[2])
 
     const DATE_VALUE: Date = new Date(Y, M, D) as Date
-    alert(this.imgsrc)
-    const PICTURE_ITEM = new PictureItem(this.imgsrc, DES_VALUE, GEO_VALUE, DATE_VALUE, ID)
+    //alert(this.imgsrc)
+    const PICTURE_ITEM: PictureItem = new PictureItem(
+      this.imgsrc,
+      DES_VALUE,
+      GEO_VALUE,
+      DATE_VALUE,
+      ID)
     this.ugDalService
       .insertGallery(this.uiService.getUserName(), PICTURE_ITEM)
       .then(() => {
