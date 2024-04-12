@@ -14,23 +14,12 @@ export class BottomHeaderNavComponent {
   private router = inject(Router)
 
   onCapturePhotoClick() {
-    localStorage.removeItem('photo');
-    this.cameraService
-      .capturePhoto()
-      .then((data) => {
-        this.cameraService
-          .setCapturedImage(data)
-          .then(() => {
-            this.router.navigate(['home/camera'])
-          })
-          .catch((e) => {
-            alert('setCapturedImage error: ' + e.toString());
-            localStorage.removeItem('photo');
-          })
-      })
-      .catch((e) => {
-        //alert('capturePhoto error: ' + e.toString());
-        localStorage.removeItem('photo');
-      })
+    this.cameraService.capturePhoto().then((base64Data) => {
+      this.cameraService.setCapturedImage(base64Data)
+      this.router.navigate(['home/camera', Date.now()])
+    }).catch((error) => {
+      console.error('Capture Photo Error:', error)
+    })
+
   }
 }

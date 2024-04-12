@@ -39,7 +39,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
       },
       {
-        path: 'camera',
+        path: 'camera/:timestamp',
         component: CameraComponent,
         title: 'Camera',
         canActivate: [authGuard],
