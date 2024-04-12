@@ -13,8 +13,7 @@ export class UserGalleryDalService {
     return new Promise((resolve, reject) => {
       const TRAN = this.lbedb.db.transaction(['users'], 'readwrite')
       const USER_STORE = TRAN.objectStore('users')
-      console.log(user)
-      const REQ = USER_STORE.get('dsa')
+      const REQ = USER_STORE.get(user)
       REQ.onsuccess = (event: any) => {
         const USER = event.target.result as User
         if (USER) {
