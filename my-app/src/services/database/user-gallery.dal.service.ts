@@ -28,6 +28,23 @@ export class UserGalleryDalService {
     })
   }
 
+  findGalleryItem(id: string, userName: string){
+    return new Promise((resolve, reject) => {
+      const TRAN = this.lbedb.db.transaction(['users'], 'readwrite')
+      const USER_STORE = TRAN.objectStore('users')
+      const REQ = USER_STORE.get(userName)
+      REQ.onsuccess = (event: any) => {
+        const USER = event.target.result as User
+        if (USER) {
+          resolve(USER.userGallery[id])
+        }
+      }
+      REQ.onerror = (event: any) => {
+        reject(event)
+      }
+    })
+  }
+
   // async retrieveGalleries(): Promise<PictureItem[]> {
   //   return new Promise((resolve, reject) => {
   //     try {
