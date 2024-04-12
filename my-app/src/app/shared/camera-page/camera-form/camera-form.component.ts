@@ -20,6 +20,7 @@ export class CameraFormComponent {
   private uiService = inject(UserInfoService)
   private ugDalService = inject(UserGalleryDalService)
   private geoService = inject(GeoService)
+  private position: any = undefined
 
   public itemForm: any
   public des: FormControl
@@ -36,6 +37,9 @@ export class CameraFormComponent {
     this.des = this.itemForm.controls['description'] as FormControl
     this.date = this.itemForm.controls['date'] as FormControl
     this.geolocation = this.itemForm.controls['geolocation'] as FormControl
+  }
+
+  ngOnInit() {
     this.getLocation()
   }
 
@@ -49,12 +53,14 @@ export class CameraFormComponent {
 
   private getLocation(): void {
     this.geoService.getCurrentLocation().then(data => {
-      const { latitude, longitude } = data.coords
+      this.position = data
+      const latitude = data.lat
+      const longitude = data.lon
       this.itemForm.controls['geolocation'].setValue(`latitude: ${latitude}, longitude: ${longitude}`)
       this.itemForm.controls['geolocation'].disable()
     }).catch(error => {
       console.error('Error fetching location:', error)
-      this.itemForm.controls['geolocation'].setValue('Failed to get location')
+      this.itemForm.controls['geolocation'].setValue('Failed: ' + error)
       this.itemForm.controls['geolocation'].disable()
     })
   }
