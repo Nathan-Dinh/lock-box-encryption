@@ -1,18 +1,22 @@
 import { Injectable, inject } from '@angular/core'
 import { DatabaseService } from './database.service'
 import { User } from '../../models/user.model'
+import { UserGalleryDalService } from './user-gallery.dal.service'
+import { UserGallery } from '../../models/user-gallery.model'
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserDalService {
-  lbedb = inject(DatabaseService)
+  private ugDalService = inject(UserGalleryDalService)
+  private lbedb = inject(DatabaseService)
 
   async insert(user: User): Promise<any> {
     try {
       const TRAN = await this.lbedb.db.transaction(['users'], 'readwrite')
       const USER_STORE = await TRAN.objectStore('users')
       await USER_STORE.add(user)
+      await this.ugDalService.createUserGallery(new UserGallery(user.userName))
     } catch (error) {
       console.error(error)
     }

@@ -24,6 +24,10 @@ export class DatabaseService {
           keyPath: "userName",
           autoIncrement: true,
         });
+        this.db.createObjectStore("user_gallery", {
+          keyPath: "userName",
+          autoIncrement: true,
+        });
       }
     });
   }
