@@ -6,6 +6,11 @@ import { UserInfoService } from '../../../../store/user-info-store.service'
 import { Router } from '@angular/router'
 import { GeoService } from '../../../../services/geo/geo.service'
 
+interface geoLocation{
+  latitude: number 
+  longitude: number
+}
+
 @Component({
   selector: 'camera-form',
   standalone: true,
@@ -13,30 +18,35 @@ import { GeoService } from '../../../../services/geo/geo.service'
   templateUrl: './camera-form.component.html',
   styleUrl: './camera-form.component.css',
 })
+
+
 export class CameraFormComponent {
   @Input() imgsrc: string
+
   private frmBuilder = inject(FormBuilder)
   private router = inject(Router)
   private uiService = inject(UserInfoService)
   private ugDalService = inject(UserGalleryDalService)
   private geoService = inject(GeoService)
-  private position: any = undefined
-
+  public geoLocation : geoLocation
   public itemForm: any
-  public des: FormControl
-  public date: FormControl
-  public geolocation: FormControl
+  
+
+  public desControl: FormControl
+  public dateControl: FormControl
+  public geolocationControl: FormControl
 
   constructor() {
     this.imgsrc = ''
+    this.geoLocation = {latitude: 0, longitude:0}
     this.itemForm = this.frmBuilder.group({
       description: ['', []],
       date: new FormControl({ value: this.setCurrentDate(), disabled: true }),
       geolocation: new FormControl({ value: '', disabled: true }),
     })
-    this.des = this.itemForm.controls['description'] as FormControl
-    this.date = this.itemForm.controls['date'] as FormControl
-    this.geolocation = this.itemForm.controls['geolocation'] as FormControl
+    this.desControl = this.itemForm.controls['description'] as FormControl
+    this.dateControl = this.itemForm.controls['date'] as FormControl
+    this.geolocationControl = this.itemForm.controls['geolocation'] as FormControl
   }
 
   ngOnInit() {
@@ -53,10 +63,8 @@ export class CameraFormComponent {
 
   private getLocation(): void {
     this.geoService.getCurrentLocation().then(data => {
-      this.position = data
-      const latitude = data.lat
-      const longitude = data.lon
-      this.itemForm.controls['geolocation'].setValue(`latitude: ${latitude}, longitude: ${longitude}`)
+      this.geoLocation = { latitude: data.lat, longitude: data.lon }
+      this.itemForm.controls['geolocation'].setValue(`latitude: ${this.geoLocation.latitude}, longitude: ${this.geoLocation.longitude}`)
       this.itemForm.controls['geolocation'].disable()
     }).catch(error => {
       console.error('Error fetching location:', error)
@@ -67,19 +75,17 @@ export class CameraFormComponent {
 
   public savePhoto(): void {
     const ID: string = 'id' + Math.random().toString(16).slice(2)
-    const DES_VALUE = this.des.value
-    const GEO_VALUE = this.geolocation.value
-    const DATE_PARTS = this.date.value.split('-')
+    const DES_VALUE = this.desControl.value
+    const DATE_PARTS = this.dateControl.value.split('-')
     const Y = parseInt(DATE_PARTS[0])
     const M = parseInt(DATE_PARTS[1]) - 1 // Month is zero-based (0-11)
     const D = parseInt(DATE_PARTS[2])
 
     const DATE_VALUE: Date = new Date(Y, M, D) as Date
-    //alert(this.imgsrc)
     const PICTURE_ITEM: PictureItem = new PictureItem(
       this.imgsrc,
       DES_VALUE,
-      GEO_VALUE,
+      this.geoLocation,
       DATE_VALUE,
       ID)
     this.ugDalService
