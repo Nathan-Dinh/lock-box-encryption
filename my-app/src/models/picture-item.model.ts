@@ -1,11 +1,17 @@
+
+interface geoLocation{
+  latitude: number 
+  longitude: number
+}
+
 export class PictureItem {
   private id: string
   private imgData: string
   private description: string
-  private geolocation: string
+  private geolocation: geoLocation
   private date: Date
 
-  constructor(imgData: string, description: string, geolocation: string, date: Date, id: string) {
+  constructor(imgData: string, description: string, geolocation: geoLocation, date: Date, id: string) {
     this.id = id
     this.imgData = imgData
     this.geolocation = geolocation
@@ -27,6 +33,10 @@ export class PictureItem {
 
   getImgDate(): string{
     return this.imgData
+  }
+  
+  getGeoLocation(): object{
+    return this.geolocation
   }
 
 
