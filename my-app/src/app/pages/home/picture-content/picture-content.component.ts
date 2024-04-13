@@ -1,8 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core'
+import { Component } from '@angular/core'
 import { TopHeaderNavComponent } from '../../../shared/picture-content-page/top-header-nav/top-header-nav.component'
 import { PictureContentFormComponent } from '../../../shared/picture-content-page/picture-content-form/picture-content-form.component'
-
-import { PictureItem } from '../../../../models/picture-item.model'
 
 @Component({
   selector: 'picture-content',
