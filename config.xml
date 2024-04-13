@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.example.photoapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0"  xmlns:android="http://schemas.android.com/apk/res/android">
-    <name>Photo/Encryption App</name>
-    <description>Sample Android app made from Angular project</description>
-    <author email="jbourne@spy.com, jbourne@spy.com" href="http://spy.com">
-        Jason Bourne
+<widget id="com.example.lockboxencryptionapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0"  xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>LockBoxEncryption App</name>
+    <description>A mobile web application using Cordova and Angular, which allows users to store, edit, delete, and encrypt photos</description>
+    <author email="jkim8918@conestogac.on.ca, Ndinh5518@conestogac.on.ca" href="https://github.com/Nathan-Dinh/lock-box-encryption">
+        Jindo Kim, Nathan Dinh
     </author>
     <content src="index.html" />
     <allow-intent href="http://*/*" />
@@ -12,7 +12,6 @@
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/uses-permission">
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
         </edit-config>
-
         <preference name="AndroidWindowSplashScreenAnimatedIcon" value="splash.png"/>
         <preference name="AndroidWindowSplashScreenBackground" value="#000000" />
         <preference name="SplashScreenDelay" value="1000"/>
