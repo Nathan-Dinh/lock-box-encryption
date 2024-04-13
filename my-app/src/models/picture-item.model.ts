@@ -1,17 +1,13 @@
-
-interface geoLocation{
-  latitude: number 
-  longitude: number
-}
+import { GeoLocation } from "./geo-location.model"
 
 export class PictureItem {
   private id: string
   private imgData: string
   private description: string
-  private geolocation: geoLocation
+  private geolocation: GeoLocation
   private date: Date
 
-  constructor(imgData: string, description: string, geolocation: geoLocation, date: Date, id: string) {
+  constructor(imgData: string, description: string, geolocation: GeoLocation, date: Date, id: string) {
     this.id = id
     this.imgData = imgData
     this.geolocation = geolocation
