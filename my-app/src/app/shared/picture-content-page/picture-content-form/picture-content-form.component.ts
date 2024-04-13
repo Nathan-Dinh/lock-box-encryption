@@ -11,6 +11,7 @@ import { UserGalleryDalService } from '../../../../services/database/user-galler
 import { UserInfoService } from '../../../../store/user-info-store.service'
 import { PictureItem } from '../../../../models/picture-item.model'
 import { Router } from '@angular/router'
+import { GeoService } from '../../../../services/geo/geo.service'
 
 @Component({
   selector: 'picture-content-form',
@@ -24,6 +25,7 @@ export class PictureContentFormComponent implements OnInit {
   private route = inject(ActivatedRoute)
   private ugDalService = inject(UserGalleryDalService)
   private uiService = inject(UserInfoService)
+  private gSErvice = inject(GeoService)
   private router = inject(Router)
   public imgSrc: string
   public frmPicContent: any
@@ -43,6 +45,7 @@ export class PictureContentFormComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    const geoContainer = document.getElementById('geo-container') as HTMLElement
     const ID_VALUE = this.route.snapshot.queryParamMap.get('id') as string
     const GALLERY_ITEM = (await this.ugDalService.findGalleryItem(
       ID_VALUE,
@@ -52,6 +55,10 @@ export class PictureContentFormComponent implements OnInit {
     this.desControl.setValue(GALLERY_ITEM.description)
     this.dateControl.setValue(this.getDate(GALLERY_ITEM.date as Date))
     this.imgSrc = GALLERY_ITEM.imgData
+
+    const LAT = GALLERY_ITEM.geolocation.latitude
+    const LNG = GALLERY_ITEM.geolocation.longitude
+    this.gSErvice.showMap(LAT,LNG, geoContainer)
   }
 
   private getDate(date: Date) {
@@ -76,7 +83,7 @@ export class PictureContentFormComponent implements OnInit {
       const ITEM = new PictureItem(
         this.pictureItem.imgData,
         this.desControl.value,
-        "",
+        this.pictureItem.geolocation,
         this.pictureItem.date,
         this.pictureItem.id
       )
