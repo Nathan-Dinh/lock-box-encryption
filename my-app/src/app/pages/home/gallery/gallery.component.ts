@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core'
 import { TopHeaderNavComponent } from '../../../shared/components/top-header-nav/top-header-nav.component'
 import { UserDalService } from '../../../../services/database/user.dal.service'
 import { UserInfoService } from '../../../../store/user-info-store.service'
+import { UserGalleryDalService } from '../../../../services/database/user-gallery.dal.service'
 import { NgForOf, NgIf } from '@angular/common'
 import { RouterLink } from '@angular/router'
 
@@ -14,6 +15,7 @@ import { RouterLink } from '@angular/router'
 })
 export class GalleryComponent implements OnInit {
   private uiDalService = inject(UserDalService)
+  private ugDalService = inject(UserGalleryDalService)
   private uiService = inject(UserInfoService)
   public picList: any
 
@@ -22,13 +24,11 @@ export class GalleryComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const OBJECT_VALUES = await this.uiDalService
-      .find(this.uiService.getUserName())
+    const OBJECT_VALUES = await this.ugDalService
+      .findGallery(this.uiService.getUserName())
       .then((data) => {
         return data.userGallery
       })
     this.picList = Object.values(OBJECT_VALUES)
-  }
-
-  
+  }  
 }
