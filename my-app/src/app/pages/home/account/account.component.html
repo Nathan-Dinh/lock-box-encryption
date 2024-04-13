@@ -1,29 +1,5 @@
 <top-header-nav headerTitle="Account"></top-header-nav>
 <div  class="d-flex flex-column text-center">
   <h1>account</h1>
-  <div class="text-start">
-    <form [formGroup]="accFrm" class="p-5">
-        <div class="mb-3">
-            <label class="form-label" for="userName">Username</label>
-            <input class="form-control disabled" type="text" id="userName" name="userName"  formControlName="userName" >
-        </div>
-        <div  class="mb-3">
-            <label class="form-label" for="password">Password</label>
-            <div class="d-flex">
-                <input class="form-control" [type]="showPassword ? 'text' : 'password'" id="password" name="password"  formControlName="password" />
-                <button type="button" class="btn btn-primary mx-1" (click)="showPasswordClickHandler()" >Show </button>
-            </div>
-        </div>
-        <div>
-          @if(!updateMode){
-            <button (click)="deleteUser()" class="btn btn-danger mx-1">Delete</button>
-            <button type="button" (click)="updatePasswordClickHandler()" class="btn btn-primary">Update</button>
-          }
-          @if(updateMode){
-            <button (click)="cancelClickHandler()" class="btn btn-danger mx-1">Cancel</button>
-            <button (click)="updateUser()" type="button" class="btn btn-success">Update</button>
-          }
-        </div>
-    </form>
-  </div>
+  <account-form></account-form>
 </div>
