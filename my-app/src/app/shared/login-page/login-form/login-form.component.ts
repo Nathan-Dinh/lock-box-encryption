@@ -46,7 +46,7 @@ export class LoginFormComponent {
         this.uiService.setUser(USER)
         this.authControl.setAuth(true)
         this.ceService.setUserCookie(USER)
-        this.route.navigate(['/home'])
+        await this.route.navigate(['/home'])
       } else this.errorMessage = 'User could not be found'
     } else
       this.errorMessage =
