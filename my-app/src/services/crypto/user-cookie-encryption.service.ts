@@ -8,20 +8,20 @@ import { User } from '../../models/user.model'
   providedIn: 'root',
 })
 export class UserCookieEncryptionService {
-   private cService = inject(CookieService)
+   private cService: CookieService = inject(CookieService)
 
 
-  setUserCookie(user : User){
+  setUserCookie(user : User): void{
     this.cService.delete("session")
     const C_BODY: string = user.userName + '-' + user.password
     const C_Name: string = 'session'
     this.cService.set(C_Name, this.encryptCookie(C_BODY), { expires: 0.5 })
   }
 
-  deleteUserCookie(){
+  deleteUserCookie(): void{
     this.cService.delete("session")
   }
-  
+
   encryptCookie(cBody: string): string {
     return CryptoJS.AES.encrypt(cBody, environment.key).toString()
   }

@@ -51,23 +51,23 @@ export class AccountFormComponent {
     this.passControl = this.accFrm.controls['password']
   }
 
-  public showPasswordClickHandler() {
+  public showPasswordClickHandler(): void {
     this.showPassword = !this.showPassword
   }
 
-  public updatePasswordClickHandler() {
+  public updatePasswordClickHandler(): void {
     this.showPassword = true
     this.passControl.enable()
     this.updateMode = true
   }
 
-  public cancelClickHandler() {
+  public cancelClickHandler(): void {
     this.showPassword = false
     this.passControl.disable()
     this.updateMode = false
   }
 
-  public deleteUser() {
+  public deleteUser(): void {
     if (
       confirm(
         'Continuing will delete all data pertaining to user. Would you like to continue?',
@@ -80,10 +80,10 @@ export class AccountFormComponent {
     }
   }
 
-  public updateUser() {
+  public updateUser(): void {
     if (this.accFrm.invalid) {
-      alert('Please fill in the required password field.');
-      return;
+      alert('Please fill in the required password field.')
+      return
     }
 
     if (confirm('Is this the password you want to use?')) {

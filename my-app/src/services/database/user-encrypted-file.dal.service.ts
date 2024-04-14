@@ -7,66 +7,74 @@ import { EncryptedItem } from '../../models/encrypted-item.model'
   providedIn: 'root',
 })
 export class UserEncryptedFileDalService {
-  private lbedb = inject(DatabaseService)
+  private lbedb: DatabaseService = inject(DatabaseService)
 
-  createUserEncryptFile(userEncryptedFile: UserEncryptedFile) {
-    return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(
-        ['user_encrypted_files'],
-        'readwrite'
-      )
-      const USER_GALLERY_STORE = TRAN.objectStore('user_encrypted_files')
-      const REQ = USER_GALLERY_STORE.put(userEncryptedFile)
-      REQ.onsuccess = (event: any) => resolve(event)
-      REQ.onerror = (event: any) => reject(event)
+
+  async createUserEncryptFile(userEncryptedFile: UserEncryptedFile): Promise<void> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+
+    const TRAN: IDBTransaction = db.transaction(['user_encrypted_files'], 'readwrite')
+    const USER_GALLERY_STORE: IDBObjectStore = TRAN.objectStore('user_encrypted_files')
+
+    await new Promise<void>((resolve, reject) => {
+      const REQ: IDBRequest<IDBValidKey> = USER_GALLERY_STORE.put(userEncryptedFile)
+      REQ.onsuccess = () => resolve()
+      REQ.onerror = () => reject(REQ.error)
     })
   }
 
-  insertEncryptedFile(userName: string, encryptedItem: EncryptedItem) {
-    return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(
-        ['user_encrypted_files'],
-        'readwrite'
-      )
-      const USER_GALLERY_STORE = TRAN.objectStore('user_encrypted_files')
-      const REQ = USER_GALLERY_STORE.get(userName)
-      REQ.onsuccess = (event: any) => {
-        const USER = event.target.result as UserEncryptedFile
-        if (USER) {
-          USER.encryptedFiles[encryptedItem.id] = encryptedItem
-          USER_GALLERY_STORE.put(USER)
-          resolve(event)
+  async insertEncryptedFile(userName: string, encryptedItem: EncryptedItem): Promise<void> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+
+    const TRAN: IDBTransaction = db.transaction(['user_encrypted_files'], 'readwrite')
+    const USER_GALLERY_STORE: IDBObjectStore = TRAN.objectStore('user_encrypted_files')
+
+    await new Promise<void>((resolve, reject) => {
+      const REQ: IDBRequest = USER_GALLERY_STORE.get(userName)
+      REQ.onsuccess = () => {
+        const user: UserEncryptedFile = REQ.result as UserEncryptedFile
+        if (user) {
+          user.encryptedFiles[encryptedItem.id] = encryptedItem
+          const updateRequest: IDBRequest<IDBValidKey> = USER_GALLERY_STORE.put(user)
+          updateRequest.onsuccess = () => resolve()
+          updateRequest.onerror = () => reject(updateRequest.error)
         } else {
-          reject(event)
+          reject(new Error('User not found'))
         }
       }
-      REQ.onerror = (event: any) => {
-        reject(event)
-      }
+      REQ.onerror = () => reject(REQ.error)
     })
   }
 
-  deleteEncryptedFile(userName: string, id: string) {
-    return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(
-        ['user_encrypted_files'],
-        'readwrite'
-      )
-      const USER_GALLERY_STORE = TRAN.objectStore('user_encrypted_files')
-      const REQ = USER_GALLERY_STORE.get(userName)
-      REQ.onsuccess = (event: any) => {
-        const USER = event.target.result as UserEncryptedFile
-        if (USER) {
-          delete USER.encryptedFiles[id]
-          USER_GALLERY_STORE.put(USER)
-          resolve(event)
+  async deleteEncryptedFile(userName: string, id: string): Promise<void> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+
+    const TRAN: IDBTransaction = db.transaction(['user_encrypted_files'], 'readwrite')
+    const USER_GALLERY_STORE: IDBObjectStore = TRAN.objectStore('user_encrypted_files')
+
+    await new Promise<void>((resolve, reject) => {
+      const REQ: IDBRequest = USER_GALLERY_STORE.get(userName)
+      REQ.onsuccess = () => {
+        const user: UserEncryptedFile = REQ.result as UserEncryptedFile
+        if (user) {
+          delete user.encryptedFiles[id]
+          const updateRequest: IDBRequest<IDBValidKey> = USER_GALLERY_STORE.put(user)
+          updateRequest.onsuccess = () => resolve()
+          updateRequest.onerror = () => reject(updateRequest.error)
         } else {
-          reject(event)
+          reject(new Error('User not found'))
         }
       }
-      REQ.onerror = (event: any) => {
-        reject(event)
-      }
+      REQ.onerror = () => reject(REQ.error)
     })
   }
 }

@@ -21,11 +21,11 @@ export class PictureContentComponent{
     this.id = ""
   }
 
-  setImgSrc(event: any){
+  setImgSrc(event: string): void{
     this.imgSrc = event
   }
 
-  setId(event : any){
+  setId(event : string): void{
     this.id = event
   }
 }

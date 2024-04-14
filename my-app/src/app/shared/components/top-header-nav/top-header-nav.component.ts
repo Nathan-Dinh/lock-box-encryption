@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router'
 })
 export class TopHeaderNavComponent {
   @Input() headerTitle: string
-  private uceService = inject(UserCookieEncryptionService)
+  private uceService: UserCookieEncryptionService = inject(UserCookieEncryptionService)
   public isNavHidden: boolean
   public lastScrollTop: number
 
@@ -23,7 +23,7 @@ export class TopHeaderNavComponent {
   }
 
   @HostListener('window:scroll', [])
-  public onWindowScroll() {
+  public onWindowScroll(): void {
     const SCROLL_TOP = window.pageYOffset || document.documentElement.scrollTop
     if (SCROLL_TOP > this.lastScrollTop && SCROLL_TOP > 100) {
       this.isNavHidden = true // Scrolling down
@@ -33,7 +33,7 @@ export class TopHeaderNavComponent {
     this.lastScrollTop = SCROLL_TOP <= 0 ? 0 : SCROLL_TOP
   }
 
-  public signOutClickHandler() {
+  public signOutClickHandler(): void {
     this.uceService.deleteUserCookie()
   }
 }

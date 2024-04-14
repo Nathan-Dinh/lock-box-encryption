@@ -4,7 +4,7 @@ import {
   ReactiveFormsModule,
   FormBuilder,
   Validators,
-  FormControl,
+  FormControl, FormGroup,
 } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { UserGalleryDalService } from '../../../../services/database/user-gallery.dal.service'
@@ -21,15 +21,15 @@ import { GeoService } from '../../../../services/geo/geo.service'
   styleUrl: './picture-content-form.component.css',
 })
 export class PictureContentFormComponent implements OnInit {
-  @Output() img = new EventEmitter<string>()
-  @Output() id = new EventEmitter<string>()
+  @Output() img: EventEmitter<string> = new EventEmitter<string>()
+  @Output() id: EventEmitter<string> = new EventEmitter<string>()
 
-  private frmBuilder = inject(FormBuilder)
-  private route = inject(ActivatedRoute)
-  private ugDalService = inject(UserGalleryDalService)
-  private uiService = inject(UserInfoService)
-  private gSErvice = inject(GeoService)
-  private router = inject(Router)
+  private frmBuilder: FormBuilder = inject(FormBuilder)
+  private route: ActivatedRoute = inject(ActivatedRoute)
+  private ugDalService: UserGalleryDalService = inject(UserGalleryDalService)
+  private uiService: UserInfoService = inject(UserInfoService)
+  private gSErvice: GeoService = inject(GeoService)
+  private router: Router = inject(Router)
   public imgSrc: string
   public frmPicContent: any
   public desControl: FormControl
@@ -48,11 +48,11 @@ export class PictureContentFormComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const geoContainer = document.getElementById('geo-container') as HTMLElement
-    const ID_VALUE = this.route.snapshot.queryParamMap.get('id') as string
+    const geoContainer: HTMLElement = document.getElementById('geo-container') as HTMLElement
+    const ID_VALUE: string = this.route.snapshot.queryParamMap.get('id') as string
     const GALLERY_ITEM = (await this.ugDalService.findGalleryItem(
       ID_VALUE,
-      this.uiService.getUserName()
+      this.uiService.getUserName(),
     )) as any
     this.pictureItem = GALLERY_ITEM
     this.desControl.setValue(GALLERY_ITEM.description)
@@ -66,30 +66,30 @@ export class PictureContentFormComponent implements OnInit {
   }
 
   private getDate(date: Date) {
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0') // January is 0!
-    const day = String(date.getDate()).padStart(2, '0')
+    const year: number = date.getFullYear()
+    const month: string = String(date.getMonth() + 1).padStart(2, '0') // January is 0!
+    const day: string = String(date.getDate()).padStart(2, '0')
     return `${year}-${month}-${day}`
   }
 
-  public deleteGalleryItem() {
+  public deleteGalleryItem(): void {
     if (confirm('Picture content will be lost')) {
       this.ugDalService.deleteGalleryItem(
         this.pictureItem.id,
-        this.uiService.getUserName()
+        this.uiService.getUserName(),
       )
       this.router.navigate(['/home/gallery'])
     }
   }
 
-  public editGalleryItem() {
+  public editGalleryItem(): void {
     if (confirm('Is information correct')) {
-      const ITEM = new PictureItem(
+      const ITEM: PictureItem = new PictureItem(
         this.pictureItem.imgData,
         this.desControl.value,
         this.pictureItem.geolocation,
         this.pictureItem.date,
-        this.pictureItem.id
+        this.pictureItem.id,
       )
       this.ugDalService.editGalleryItem(ITEM, this.uiService.getUserName())
     }

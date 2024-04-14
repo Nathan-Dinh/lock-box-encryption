@@ -3,7 +3,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
   FormBuilder,
-  Validators
+  Validators,
 } from '@angular/forms'
 import { CookieService } from 'ngx-cookie-service'
 import { User } from '../../../../models/user.model'
@@ -20,11 +20,11 @@ import { UserInfoService } from '../../../../store/user-info-store.service'
   styleUrl: './login-form.component.css',
 })
 export class LoginFormComponent {
-  private ceService = inject(UserCookieEncryptionService)
-  private authControl = inject(AuthControlService)
-  private route = inject(Router)
-  private frmBuilder = inject(FormBuilder)
-  private uiService = inject(UserInfoService)
+  private ceService: UserCookieEncryptionService = inject(UserCookieEncryptionService)
+  private authControl: AuthControlService = inject(AuthControlService)
+  private route: Router = inject(Router)
+  private frmBuilder: FormBuilder = inject(FormBuilder)
+  private uiService: UserInfoService = inject(UserInfoService)
   public errorMessage: string
 
   public userForm: any
@@ -33,11 +33,11 @@ export class LoginFormComponent {
     this.errorMessage = ''
     this.userForm = this.frmBuilder.group({
       userName: ['', [Validators.required]],
-      password: ['', [Validators.required]]
+      password: ['', [Validators.required]],
     })
   }
 
- public async onSubmitHandler() {
+  public async onSubmitHandler(): Promise<void> {
     if (this.userForm.valid) {
       const USER_NAME: string = this.userForm.value.userName as string
       const PASSWORD: string = this.userForm.value.password as string

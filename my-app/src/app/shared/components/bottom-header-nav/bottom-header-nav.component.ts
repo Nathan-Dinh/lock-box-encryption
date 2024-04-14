@@ -10,10 +10,10 @@ import { CameraService } from '../../../../services/camera/camera.service'
   styleUrl: './bottom-header-nav.component.css',
 })
 export class BottomHeaderNavComponent {
-  private cameraService = inject(CameraService)
-  private router = inject(Router)
+  private cameraService: CameraService = inject(CameraService)
+  private router: Router = inject(Router)
 
-  onCapturePhotoClick() {
+  onCapturePhotoClick(): void {
     this.cameraService.capturePhoto().then((base64Data) => {
       this.cameraService.setCapturedImage(base64Data)
       this.router.navigate(['home/camera', Date.now()])

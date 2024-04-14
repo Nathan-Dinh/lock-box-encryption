@@ -4,8 +4,8 @@ import { Router } from '@angular/router'
 import { AuthControlService } from '../../store/auth-store.service'
 
 export const authGuard: CanActivateFn = (route, state) => {
-  const ROUTER = inject(Router)
-  const AUTH_CONTROL = inject(AuthControlService)
+  const ROUTER: Router = inject(Router)
+  const AUTH_CONTROL: AuthControlService = inject(AuthControlService)
 
   if(AUTH_CONTROL.getAuth()){
     return true

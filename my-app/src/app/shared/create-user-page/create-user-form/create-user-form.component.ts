@@ -4,7 +4,7 @@ import {
   ReactiveFormsModule,
   Validators,
   AbstractControl,
-  FormControl,
+  FormControl, ValidatorFn, ValidationErrors,
 } from '@angular/forms'
 import { UserDalService } from '../../../../services/database/user.dal.service'
 import { JsonPipe } from '@angular/common'
@@ -19,9 +19,9 @@ import { Router } from '@angular/router'
   styleUrl: './create-user-form.component.css',
 })
 export class CreateUserFormComponent {
-  private frmBuilder = inject(FormBuilder)
-  private userDal = inject(UserDalService)
-  private router = inject(Router)
+  private frmBuilder: FormBuilder = inject(FormBuilder)
+  private userDal: UserDalService = inject(UserDalService)
+  private router: Router = inject(Router)
   public createUserForm: any
   public refUserName: FormControl
   public refPassword1: FormControl
@@ -35,7 +35,7 @@ export class CreateUserFormComponent {
           password1: ['', [Validators.required]],
           password2: ['', [Validators.required]],
         },
-        { validators: this.matchPassword }
+        { validators: this.matchPassword },
       ),
     })
     this.refUserName = this.createUserForm.controls['userName']
@@ -45,14 +45,14 @@ export class CreateUserFormComponent {
       this.createUserForm.controls['passwordGroup'].controls['password2']
   }
 
-  public onSubmitHandler() {
+  public onSubmitHandler(): void {
     if (this.createUserForm.valid) {
       try {
         const USER_NAME: string = this.createUserForm.value.userName as string
         const PASSWORD: string = this.createUserForm.value.passwordGroup
           ?.password1 as string
         const USER: User = new User(USER_NAME, PASSWORD)
-        this.userDal.find(USER.userName).then((user) => {
+        this.userDal.find(USER.userName).then((user: User | null) => {
           if (user === null) {
             this.userDal.insert(USER)
             this.router.navigate(['/login'])
@@ -68,16 +68,16 @@ export class CreateUserFormComponent {
     }
   }
 
-  public matchPassword(control: AbstractControl) {
-    let password1: FormControl = control.get('password1') as FormControl
-    let password2: FormControl = control.get('password2') as FormControl
+  public matchPassword: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    let password1: FormControl = control.get('password1') as FormControl;
+    let password2: FormControl = control.get('password2') as FormControl;
     if (
-      password1?.value != '' &&
-      password2?.value != '' &&
-      password1?.value == password2?.value
+      password1?.value !== '' &&
+      password2?.value !== '' &&
+      password1?.value === password2?.value
     ) {
-      return null
+      return null;
     }
-    return { passwordGroupError: true }
+    return { passwordGroupError: true };
   }
 }

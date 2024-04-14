@@ -1,43 +1,33 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 
 export class DatabaseService {
-  db: any;
-  createDatabase(): Promise<any> {
+  db: IDBDatabase | null = null
+
+  createDatabase(): Promise<IDBDatabase> {
     return new Promise((resolve, reject) => {
-      const request = indexedDB.open("LBEDB", 1);
-      request.onerror = (event) => {
-        reject('Error in creating database')
+      const request: IDBOpenDBRequest = indexedDB.open('LBEDB', 1)
+
+      request.onerror = (event: Event) => {
+        reject(new Error('Database error: ' + (event.target as IDBOpenDBRequest).error?.message))
       }
-      request.onsuccess = (event) => {
-        // @ts-ignore
-        this.db = event.target.result;
-        resolve(this.db);
+      request.onsuccess = (event: Event) => {
+        this.db = (event.target as IDBOpenDBRequest).result
+        resolve(this.db)
       }
-      request.onupgradeneeded = (event) => {
-        // @ts-ignore
-        this.db = event.target.result;
-        this.db.createObjectStore("users", {
-          keyPath: "userName",
-          autoIncrement: true,
-        });
-        this.db.createObjectStore("user_gallery", {
-          keyPath: "userName",
-          autoIncrement: true,
-        });
-        this.db.createObjectStore("user_encrypted_files", {
-          keyPath: "userName",
-          autoIncrement: true,
-        });
+      request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
+        const db: IDBDatabase = (event.target as IDBOpenDBRequest).result
+        db.createObjectStore('users', { keyPath: 'userName', autoIncrement: true  })
+        db.createObjectStore('user_gallery', { keyPath: 'userName', autoIncrement: true })
+        db.createObjectStore('user_encrypted_files', { keyPath: 'userName', autoIncrement: true })
       }
-    });
+    })
   }
 
-  initDatabase() {
-    this.createDatabase()
-    
+  initDatabase(): Promise<IDBDatabase> {
+    return this.createDatabase()
   }
 }

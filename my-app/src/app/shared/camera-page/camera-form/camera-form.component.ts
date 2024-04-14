@@ -1,5 +1,5 @@
 import { Component, Input, inject } from '@angular/core'
-import { FormBuilder, ReactiveFormsModule, FormControl } from '@angular/forms'
+import { FormBuilder, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms'
 import { PictureItem } from '../../../../models/picture-item.model'
 import { UserGalleryDalService } from '../../../../services/database/user-gallery.dal.service'
 import { UserInfoService } from '../../../../store/user-info-store.service'
@@ -7,6 +7,12 @@ import { Router } from '@angular/router'
 import { GeoService } from '../../../../services/geo/geo.service'
 import { DateService } from '../../../../services/date.service'
 import { GeoLocation } from '../../../../models/geo-location.model'
+
+interface Location {
+  latitude: number;
+  longitude: number;
+}
+
 
 @Component({
   selector: 'camera-form',
@@ -18,14 +24,14 @@ import { GeoLocation } from '../../../../models/geo-location.model'
 export class CameraFormComponent {
   @Input() imgsrc: string
 
-  private frmBuilder = inject(FormBuilder)
-  private router = inject(Router)
-  private uiService = inject(UserInfoService)
-  private ugDalService = inject(UserGalleryDalService)
-  private geoService = inject(GeoService)
-  private dService = inject(DateService)
+  private frmBuilder : FormBuilder = inject(FormBuilder)
+  private router: Router = inject(Router)
+  private uiService: UserInfoService = inject(UserInfoService)
+  private ugDalService: UserGalleryDalService = inject(UserGalleryDalService)
+  private geoService: GeoService = inject(GeoService)
+  private dService: DateService = inject(DateService)
   public geoLocation: GeoLocation
-  public itemForm: any
+  public itemForm: FormGroup
 
   public desControl: FormControl
   public dateControl: FormControl
@@ -47,14 +53,14 @@ export class CameraFormComponent {
     ] as FormControl
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getLocation()
   }
 
   private getLocation(): void {
     this.geoService
       .getCurrentLocation()
-      .then((data) => {
+      .then((data: Location) => {
         this.geoLocation = { latitude: data.latitude, longitude: data.longitude }
         this.itemForm.controls['geolocation'].setValue(
           `latitude: ${this.geoLocation.latitude}, longitude: ${this.geoLocation.longitude}`
@@ -84,11 +90,11 @@ export class CameraFormComponent {
     this.ugDalService
       .insertGallery(this.uiService.getUserName(), PICTURE_ITEM)
       .then(() => {
-        console.log('Photo saved')
+        alert('gallery saved')
         this.router.navigate(['home/gallery'])
       })
       .catch((err) => {
-        console.error('Error saving photo', err)
+        alert('Error saving photo' + err)
         this.router.navigate(['home/gallery'])
       })
   }

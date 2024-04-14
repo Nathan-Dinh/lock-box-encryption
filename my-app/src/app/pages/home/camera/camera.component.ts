@@ -27,7 +27,7 @@ export class CameraComponent implements OnDestroy {
     })
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.imgSub.unsubscribe()
   }
 }

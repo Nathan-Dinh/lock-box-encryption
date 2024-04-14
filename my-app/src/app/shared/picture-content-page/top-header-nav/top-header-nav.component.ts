@@ -15,26 +15,26 @@ import { UserInfoService } from '../../../../store/user-info-store.service'
 export class TopHeaderNavComponent {
   @Input() imgSrc: string
   @Input() id: string
-  private location = inject(Location)
-  private efService = inject(EncryptFileService)
-  private uefDalService = inject(UserEncryptedFileDalService)
-  private uiService = inject(UserInfoService)
+  private location: Location = inject(Location)
+  private efService: EncryptFileService = inject(EncryptFileService)
+  private uefDalService: UserEncryptedFileDalService = inject(UserEncryptedFileDalService)
+  private uiService: UserInfoService = inject(UserInfoService)
 
   constructor() {
     this.imgSrc = ''
     this.id = ''
   }
 
-  public goBack() {
+  public goBack(): void {
     this.location.back()
   }
 
-  public encryptClickHandler() {
+  public encryptClickHandler(): void {
     if (confirm('Do you want to encrypt image')) {
-      const ENCRYPTED_IMG = this.efService.encryptItem(this.imgSrc)
-      const ENCRYPTED_ITEM = new EncryptedItem(this.id, ENCRYPTED_IMG)
-      const USERNAME = this.uiService.getUserName()
-      this.uefDalService.insertEncryptedFile(USERNAME,ENCRYPTED_ITEM)
+      const ENCRYPTED_IMG: string = this.efService.encryptItem(this.imgSrc)
+      const ENCRYPTED_ITEM: EncryptedItem = new EncryptedItem(this.id, ENCRYPTED_IMG)
+      const USERNAME: string = this.uiService.getUserName()
+      this.uefDalService.insertEncryptedFile(USERNAME, ENCRYPTED_ITEM)
     }
   }
 }

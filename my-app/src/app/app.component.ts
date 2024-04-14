@@ -1,19 +1,26 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DatabaseService } from '../services/database/database.service' 
+import { DatabaseService } from '../services/database/database.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
+export class AppComponent implements OnInit {
+  private dbService = inject(DatabaseService);
 
-export class AppComponent {
-  dbService : DatabaseService = inject(DatabaseService)
+  ngOnInit(): void {
+    this.initDB();
+  }
 
-  constructor(){
-    this.dbService.initDatabase();
+  private initDB(): void {
+    this.dbService.initDatabase().then(() => {
+      console.log('Database initialized successfully');
+    }).catch((error) => {
+      console.error('Database initialization failed', error);
+    });
   }
 }
