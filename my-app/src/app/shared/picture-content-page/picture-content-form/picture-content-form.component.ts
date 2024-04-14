@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core'
 import {
   FormsModule,
   ReactiveFormsModule,
   FormBuilder,
-  Validators,
   FormControl,
 } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
@@ -12,6 +11,7 @@ import { UserInfoService } from '../../../../store/user-info-store.service'
 import { PictureItem } from '../../../../models/picture-item.model'
 import { Router } from '@angular/router'
 import { GeoService } from '../../../../services/geo/geo.service'
+import { UserEncryptedFileDalService } from '../../../../services/database/user-encrypted-file.dal.service'
 
 @Component({
   selector: 'picture-content-form',
@@ -21,15 +21,15 @@ import { GeoService } from '../../../../services/geo/geo.service'
   styleUrl: './picture-content-form.component.css',
 })
 export class PictureContentFormComponent implements OnInit {
-  @Output() img = new EventEmitter<string>()
-  @Output() id = new EventEmitter<string>()
-
+  @Output() item = new EventEmitter<PictureItem>()
+  @Output() isEncrypt = new EventEmitter<boolean>()
   private frmBuilder = inject(FormBuilder)
   private route = inject(ActivatedRoute)
   private ugDalService = inject(UserGalleryDalService)
   private uiService = inject(UserInfoService)
   private gSErvice = inject(GeoService)
   private router = inject(Router)
+  private uefDalService = inject(UserEncryptedFileDalService)
   public imgSrc: string
   public frmPicContent: any
   public desControl: FormControl
@@ -54,15 +54,20 @@ export class PictureContentFormComponent implements OnInit {
       ID_VALUE,
       this.uiService.getUserName()
     )) as any
+
+    const Found = await this.uefDalService.findEncryptedItem(
+      this.uiService.getUserName(),
+      GALLERY_ITEM.id
+    )
+    if (Found) this.isEncrypt.emit(true)
     this.pictureItem = GALLERY_ITEM
+    this.item.emit(GALLERY_ITEM as PictureItem)
     this.desControl.setValue(GALLERY_ITEM.description)
     this.dateControl.setValue(this.getDate(GALLERY_ITEM.date as Date))
     this.imgSrc = GALLERY_ITEM.imgData
     const LAT = GALLERY_ITEM.geolocation.latitude
     const LNG = GALLERY_ITEM.geolocation.longitude
-    this.gSErvice.showMap(LAT,LNG, geoContainer)
-    this.img.emit(GALLERY_ITEM.imgData)
-    this.id.emit(GALLERY_ITEM.id)
+    this.gSErvice.showMap(LAT, LNG, geoContainer)
   }
 
   private getDate(date: Date) {
