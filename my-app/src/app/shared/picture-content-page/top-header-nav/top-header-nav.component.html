@@ -7,7 +7,12 @@
         </strong>
       </div>
       <div>
-        <a (click)="encryptClickHandler()">Encrypt</a>
+        @if(!isEncrypt){
+          <a (click)="encryptClickHandler()">Encrypt</a>
+        }
+        @if(isEncrypt){
+          <a (click)="decryptClickHandler()">Decrypt</a>
+        }
       </div>
     </div>
   </nav>
