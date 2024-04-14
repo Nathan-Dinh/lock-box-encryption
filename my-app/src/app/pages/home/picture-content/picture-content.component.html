@@ -1,4 +1,4 @@
-<pic-top-header-nav></pic-top-header-nav>
+<pic-top-header-nav [imgSrc]="imgSrc" [id]="id"></pic-top-header-nav>
 <div class="cont container">
-    <picture-content-form></picture-content-form>
+    <picture-content-form (img)="setImgSrc($event)" (id)="setId($event)"></picture-content-form>
 </div>
