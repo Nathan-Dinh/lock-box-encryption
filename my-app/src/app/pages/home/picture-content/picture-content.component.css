@@ -1,0 +1,14 @@
+.cont {
+    min-height: 100vh; /* Start with 0 height */
+
+    animation: grow 0.3s ease-in-out forwards;
+  }
+
+  @keyframes grow {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+  }

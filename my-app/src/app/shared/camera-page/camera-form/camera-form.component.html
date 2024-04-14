@@ -1,0 +1,18 @@
+<form [formGroup]="itemForm" (submit)="savePhoto()" class="container">
+  <div class="form-group">
+    <label class="form-label" for="description">Description</label>
+    <textarea class="form-control" name="description" id="description" formControlName="description"
+              placeholder="Description" rows="4"> </textarea>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="date">Date</label>
+    <input type="date" id="date" name="date" class="form-control" formControlName="date">
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="geolocation">GeoLocation</label>
+    <input type="text" id="geolocation" name="geolocation" class="form-control" formControlName="geolocation">
+  </div>
+  <div class="py-1">
+    <button type="submit" class="btn btn-primary mx-1">Save</button>
+  </div>
+</form>

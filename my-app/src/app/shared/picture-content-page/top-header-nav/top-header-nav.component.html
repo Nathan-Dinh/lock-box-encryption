@@ -1,0 +1,18 @@
+<nav class="home-navbar navbar bg-light fixed-top position-sticky py-3" >
+    <div class="container-fluid">
+      <br>
+      <div>
+        <strong>
+            Picture Content
+        </strong>
+      </div>
+      <div>
+        @if(!isEncrypt){
+          <a (click)="encryptClickHandler()">Encrypt</a>
+        }
+        @if(isEncrypt){
+          <a (click)="decryptClickHandler()">Decrypt</a>
+        }
+      </div>
+    </div>
+  </nav>
