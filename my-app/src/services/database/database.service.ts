@@ -28,11 +28,16 @@ export class DatabaseService {
           keyPath: "userName",
           autoIncrement: true,
         });
+        this.db.createObjectStore("user_encrypted_files", {
+          keyPath: "userName",
+          autoIncrement: true,
+        });
       }
     });
   }
 
   initDatabase() {
     this.createDatabase()
+    
   }
 }
