@@ -20,6 +20,16 @@ export class UserGalleryDalService {
     })
   }
 
+  deleteUserGallery(userName: string){
+    return new Promise((resolve, reject) => {
+      const TRAN = this.lbedb.db.transaction(['user_gallery'], 'readwrite')
+      const USER_GALLERY_STORE = TRAN.objectStore('user_gallery')
+      const REQ = USER_GALLERY_STORE.delete(userName)
+      REQ.onsuccess = (event: any) => resolve(event)
+      REQ.onerror = (event: any) => reject(event)
+    });
+  }
+
   findGallery(userName: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const TRAN = this.lbedb.db.transaction(['user_gallery'], 'readwrite')
