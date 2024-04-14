@@ -38,7 +38,7 @@ export class UserGalleryDalService {
       REQ.onsuccess = (event: any) => {
         const USER = event.target.result as UserGallery
         if (USER) {
-          USER.userGallery[item.getId()] = item
+          USER.userGallery[item.id] = item
           USER_GALLERY_STORE.put(USER)
         }
         resolve(event)
@@ -94,7 +94,7 @@ export class UserGalleryDalService {
         const USER = event.target.result as UserGallery
         if (USER) {
           console.log(pictureItem)
-          USER.userGallery[pictureItem.getId()] = pictureItem
+          USER.userGallery[pictureItem.id] = pictureItem
           USER_STORE.put(USER)
           resolve(event)
         }
