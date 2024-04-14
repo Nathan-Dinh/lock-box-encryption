@@ -26,7 +26,7 @@ export class GeoService {
           reject({ code: e.code, message: e.message })
         },
         {
-          timeout: 1000,
+          timeout: 5000,
           maximumAge: 0,
           enableHighAccuracy: true,
         }
