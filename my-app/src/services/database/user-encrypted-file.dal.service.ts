@@ -31,6 +31,16 @@ export class UserEncryptedFileDalService {
     })
   }
 
+  deleteUserEncryptedFiles(userName: string){
+    return new Promise((resolve, reject) => {
+      const TRAN = this.lbedb.db.transaction(['user_encrypted_files'], 'readwrite')
+      const USER_GALLERY_STORE = TRAN.objectStore('user_encrypted_files')
+      const REQ = USER_GALLERY_STORE.delete(userName)
+      REQ.onsuccess = (event: any) => resolve(event)
+      REQ.onerror = (event: any) => reject(event)
+    });
+  }
+
   createUserEncryptFile(userEncryptedFile: UserEncryptedItems) {
     return new Promise((resolve, reject) => {
       const TRAN = this.lbedb.db.transaction(
