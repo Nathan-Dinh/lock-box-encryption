@@ -55,7 +55,7 @@ export class CameraFormComponent {
     this.geoService
       .getCurrentLocation()
       .then((data) => {
-        this.geoLocation = { latitude: data.lat, longitude: data.lon }
+        this.geoLocation = { latitude: data.latitude, longitude: data.longitude }
         this.itemForm.controls['geolocation'].setValue(
           `latitude: ${this.geoLocation.latitude}, longitude: ${this.geoLocation.longitude}`
         )

@@ -60,7 +60,7 @@ export class PictureContentFormComponent implements OnInit {
     this.imgSrc = GALLERY_ITEM.imgData
     const LAT = GALLERY_ITEM.geolocation.latitude
     const LNG = GALLERY_ITEM.geolocation.longitude
-    this.gSErvice.showMap(LAT,LNG, geoContainer)
+    await this.gSErvice.showMap(LAT, LNG, geoContainer)
     this.img.emit(GALLERY_ITEM.imgData)
     this.id.emit(GALLERY_ITEM.id)
   }

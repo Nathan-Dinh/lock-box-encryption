@@ -7,19 +7,24 @@ import 'here-js-api/scripts/mapsjs-clustering'
 
 declare const H: any
 
+interface Location {
+  latitude: number;
+  longitude: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class GeoService {
   constructor() {}
 
-  getCurrentLocation(): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
+  getCurrentLocation(): Promise<Location> {
+    return new Promise<Location>((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
-        (position: any) => {
+        (position: GeolocationPosition) => {
           resolve({
-            lat: position.coords.latitude,
-            lon: position.coords.longitude,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
           })
         },
         (e) => {
@@ -34,7 +39,7 @@ export class GeoService {
     })
   }
 
-  async showMap(lat: string, lng: string, container: HTMLElement) {
+  async showMap(lat: string, lng: string, container: HTMLElement): Promise<void> {
     container.innerHTML = ''
     try {
       const PLATFORM = new H.service.Platform({
