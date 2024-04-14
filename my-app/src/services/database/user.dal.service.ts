@@ -3,12 +3,15 @@ import { DatabaseService } from './database.service'
 import { User } from '../../models/user.model'
 import { UserGalleryDalService } from './user-gallery.dal.service'
 import { UserGallery } from '../../models/user-gallery.model'
+import { UserEncryptedFileDalService } from './user-encrypted-file.dal.service'
+import { UserEncryptedFile } from '../../models/user-encrypted-files.model'
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserDalService {
   private ugDalService = inject(UserGalleryDalService)
+  private uefDalService = inject(UserEncryptedFileDalService)
   private lbedb = inject(DatabaseService)
 
   async insert(user: User): Promise<any> {
@@ -17,6 +20,7 @@ export class UserDalService {
       const USER_STORE = await TRAN.objectStore('users')
       await USER_STORE.add(user)
       await this.ugDalService.createUserGallery(new UserGallery(user.userName))
+      await this.uefDalService.createUserEncryptFile(new UserEncryptedFile(user.userName))
     } catch (error) {
       console.error(error)
     }
