@@ -24,7 +24,7 @@ export class AccountFormComponent {
   private builder: FormBuilder = inject(FormBuilder)
   private uDalService: UserDalService = inject(UserDalService)
   private ceService: UserCookieEncryptionService = inject(
-    UserCookieEncryptionService
+    UserCookieEncryptionService,
   )
   private router: Router = inject(Router)
   public user: User
@@ -41,11 +41,11 @@ export class AccountFormComponent {
     this.accFrm = this.builder.group({
       userName: new FormControl(
         { value: this.user.userName, disabled: true },
-        Validators.required
+        Validators.required,
       ),
       password: new FormControl(
         { value: this.user.password, disabled: true },
-        Validators.required
+        Validators.required,
       ),
     })
     this.passControl = this.accFrm.controls['password']
@@ -70,7 +70,7 @@ export class AccountFormComponent {
   public deleteUser() {
     if (
       confirm(
-        'Continuing will delete all data pertaining to user. Would you like to continue?'
+        'Continuing will delete all data pertaining to user. Would you like to continue?',
       )
     ) {
       this.uDalService.delete(this.user)
@@ -81,6 +81,11 @@ export class AccountFormComponent {
   }
 
   public updateUser() {
+    if (this.accFrm.invalid) {
+      alert('Please fill in the required password field.');
+      return;
+    }
+
     if (confirm('Is this the password you want to use?')) {
       this.user.password = this.passControl.value
       this.uDalService.update(this.user)
