@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -21,6 +21,9 @@ import { GeoService } from '../../../../services/geo/geo.service'
   styleUrl: './picture-content-form.component.css',
 })
 export class PictureContentFormComponent implements OnInit {
+  @Output() img = new EventEmitter<string>()
+  @Output() id = new EventEmitter<string>()
+
   private frmBuilder = inject(FormBuilder)
   private route = inject(ActivatedRoute)
   private ugDalService = inject(UserGalleryDalService)
@@ -55,10 +58,11 @@ export class PictureContentFormComponent implements OnInit {
     this.desControl.setValue(GALLERY_ITEM.description)
     this.dateControl.setValue(this.getDate(GALLERY_ITEM.date as Date))
     this.imgSrc = GALLERY_ITEM.imgData
-
     const LAT = GALLERY_ITEM.geolocation.latitude
     const LNG = GALLERY_ITEM.geolocation.longitude
     this.gSErvice.showMap(LAT,LNG, geoContainer)
+    this.img.emit(GALLERY_ITEM.imgData)
+    this.id.emit(GALLERY_ITEM.id)
   }
 
   private getDate(date: Date) {
