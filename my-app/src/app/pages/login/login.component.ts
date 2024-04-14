@@ -11,5 +11,19 @@ import { RouterLink } from '@angular/router'
 })
 
 export class LoginComponent {
-
+  constructor() {
+    alert('Trigger3')
+    fetch('https://meowfacts.herokuapp.com/')
+      .then((response) => {
+        alert('Trigger')
+        return response.json()
+      })
+      .then((date) => {
+        alert('Trigger2')
+        alert(date)
+      })
+      .catch((error) => {
+        alert(error)
+      })
+  }
 }
