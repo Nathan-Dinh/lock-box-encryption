@@ -1,13 +1,13 @@
 <top-header-nav headerTitle="Home"></top-header-nav>
-<div style="margin: 20px; padding-right: 20px;" class="col-12 mt-3">
+<div class="col-12 mt-3">
   <h1><i class="bi bi-cloud-sun-fill"></i>Hi {{ userName }},</h1>
   <p class="lead">How are you feeling today? Ready to capture some amazing moments?</p>
 </div>
-<div style="margin: 20px; padding-right: 40px;" class="col-12 mt-3">
+<div class="p-2 col-12 mt-3">
   <div *ngIf="picList.length > 0">
     <h3 style="text-align: center">Photos taken within 7 days</h3>
     <div class="gallery-container">
-      <div *ngFor="let pic of picList" style="border: 2px solid red; margin: 10px;">
+      <div *ngFor="let pic of picList" style="border: 2px solid red; ">
         <a routerLink="/home/picture-content" [queryParams]="{id: pic.id}" routerLinkActive="active">
           <img [src]="pic.imgData" alt="Captured image">
         </a>

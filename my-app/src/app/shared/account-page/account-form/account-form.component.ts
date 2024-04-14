@@ -11,6 +11,8 @@ import {
 import { Router } from '@angular/router'
 import { UserDalService } from '../../../../services/database/user.dal.service'
 import { UserCookieEncryptionService } from '../../../../services/crypto/user-cookie-encryption.service'
+import { UserGalleryDalService } from '../../../../services/database/user-gallery.dal.service'
+import { UserEncryptedFileDalService } from '../../../../services/database/user-encrypted-file.dal.service'
 
 @Component({
   selector: 'account-form',
@@ -26,6 +28,8 @@ export class AccountFormComponent {
   private ceService: UserCookieEncryptionService = inject(
     UserCookieEncryptionService,
   )
+  private  ugDalService = inject(UserGalleryDalService)
+  private  uefDalService = inject(UserEncryptedFileDalService)
   private router: Router = inject(Router)
   public user: User
   public showPassword: boolean
@@ -74,6 +78,8 @@ export class AccountFormComponent {
       )
     ) {
       this.uDalService.delete(this.user)
+      this.ugDalService.deleteUserGallery(this.user.userName)
+      this.uefDalService.deleteUserEncryptedFiles(this.user.userName)
       this.ceService.deleteUserCookie()
       alert('User has been successfully deleted')
       this.router.navigate(['login'])
