@@ -34,7 +34,7 @@ export class CameraFormComponent {
   constructor() {
     this.imgsrc = ''
     this.geoLocation = { latitude: 0, longitude: 0 }
-    const CUR_DATE = this.dService.getDateFormate(new Date())
+    const CUR_DATE = this.dService.getDateFormat(new Date())
     this.itemForm = this.frmBuilder.group({
       description: ['', []],
       date: new FormControl({ value: CUR_DATE, disabled: true }),
