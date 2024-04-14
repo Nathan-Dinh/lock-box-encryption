@@ -13,4 +13,19 @@ import { PictureContentFormComponent } from '../../../shared/picture-content-pag
   styleUrl: './picture-content.component.css',
 })
 export class PictureContentComponent{
+  public imgSrc: string
+  public id: string
+
+  constructor() {
+    this.imgSrc = ""
+    this.id = ""
+  }
+
+  setImgSrc(event: any){
+    this.imgSrc = event
+  }
+
+  setId(event : any){
+    this.id = event
+  }
 }
