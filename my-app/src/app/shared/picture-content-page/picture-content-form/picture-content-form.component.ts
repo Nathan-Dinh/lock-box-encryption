@@ -83,6 +83,10 @@ export class PictureContentFormComponent implements OnInit {
         this.pictureItem.id,
         this.uiService.getUserName()
       )
+      this.uefDalService.deleteEncryptedFile(
+        this.uiService.getUserName(),
+        this.pictureItem.id
+      )
       this.router.navigate(['/home/gallery'])
     }
   }
