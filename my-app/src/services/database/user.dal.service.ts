@@ -4,7 +4,7 @@ import { User } from '../../models/user.model'
 import { UserGalleryDalService } from './user-gallery.dal.service'
 import { UserGallery } from '../../models/user-gallery.model'
 import { UserEncryptedFileDalService } from './user-encrypted-file.dal.service'
-import { UserEncryptedFile } from '../../models/user-encrypted-files.model'
+import { UserEncryptedItems } from '../../models/user-encrypted-items.model'
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,9 @@ export class UserDalService {
       const USER_STORE = await TRAN.objectStore('users')
       await USER_STORE.add(user)
       await this.ugDalService.createUserGallery(new UserGallery(user.userName))
-      await this.uefDalService.createUserEncryptFile(new UserEncryptedFile(user.userName))
+      await this.uefDalService.createUserEncryptFile(
+        new UserEncryptedItems(user.userName)
+      )
     } catch (error) {
       console.error(error)
     }
@@ -48,7 +50,7 @@ export class UserDalService {
 
       REQ_GET.onsuccess = (event: any) => {
         const USER = event.target.result as User
-        if(USER){
+        if (USER) {
           USER.password = user.password
           USER_STORE.put(USER)
         }
