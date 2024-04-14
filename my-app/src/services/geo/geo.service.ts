@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs'
+import 'here-js-api/scripts/mapsjs-core'
+import 'here-js-api/scripts/mapsjs-service'
+import 'here-js-api/scripts/mapsjs-ui'
+import 'here-js-api/scripts/mapsjs-mapevents'
+import 'here-js-api/scripts/mapsjs-clustering'
 
-declare var H: any
+declare const H: any
 
 @Injectable({
   providedIn: 'root',
@@ -30,22 +34,25 @@ export class GeoService {
     })
   }
 
-  showMap(lat: string, lng: string, container: HTMLElement) {
+  async showMap(lat: string, lng: string, container: HTMLElement) {
     container.innerHTML = ''
-    const PlATFORM = new H.service.Platform({
-      apikey: 'urccOV2buSNx-OguAYvGG4jJ--DiEu2IJABPsNGRlFk',
-    })
-    const MAP_TYPE = PlATFORM.createDefaultLayers()
-    const MAP = new H.Map(container, MAP_TYPE.vector.normal.map, {
-      zoom: 15,
-      center: {
-        lng: lng,
-        lat: lat,
-      },
-    })
-
-    const icon = new H.map.Icon('../../assets/person-bounding-box.svg')
-    const MARKER = new H.map.Marker({ lat: lat, lng: lng }, { icon: icon })
-    MAP.addObject(MARKER)
+    try {
+      const PLATFORM = new H.service.Platform({
+        apikey: 'urccOV2buSNx-OguAYvGG4jJ--DiEu2IJABPsNGRlFk',
+      })
+      const MAP_TYPE = PLATFORM.createDefaultLayers()
+      const MAP = new H.Map(container, MAP_TYPE.vector.normal.map, {
+        zoom: 15,
+        center: {
+          lng: lng,
+          lat: lat,
+        },
+      })
+      const icon = new H.map.Icon('../../assets/person-bounding-box.svg')
+      const MARKER = new H.map.Marker({ lat: lat, lng: lng }, { icon: icon })
+      MAP.addObject(MARKER)
+    } catch (error) {
+      alert(error)
+    }
   }
 }
