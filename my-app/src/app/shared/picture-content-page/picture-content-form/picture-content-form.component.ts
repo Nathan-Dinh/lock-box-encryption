@@ -30,6 +30,7 @@ export class PictureContentFormComponent implements OnInit {
   private gSErvice = inject(GeoService)
   private router = inject(Router)
   private uefDalService = inject(UserEncryptedFileDalService)
+  public isEn: boolean
   public imgSrc: string
   public frmPicContent: any
   public desControl: FormControl
@@ -39,6 +40,7 @@ export class PictureContentFormComponent implements OnInit {
   constructor() {
     this.imgSrc = ''
     this.pictureItem = {}
+    this.isEn = false
     this.frmPicContent = this.frmBuilder.group({
       description: ['', []],
       date: new FormControl({ value: '', disabled: true }),
@@ -59,7 +61,10 @@ export class PictureContentFormComponent implements OnInit {
       this.uiService.getUserName(),
       GALLERY_ITEM.id
     )
-    if (Found) this.isEncrypt.emit(true)
+    if (Found) {
+      this.isEncrypt.emit(true)
+      this.isEn = true
+    }
     this.pictureItem = GALLERY_ITEM
     this.item.emit(GALLERY_ITEM as PictureItem)
     this.desControl.setValue(GALLERY_ITEM.description)
@@ -70,14 +75,14 @@ export class PictureContentFormComponent implements OnInit {
     this.gSErvice.showMap(LAT, LNG, geoContainer)
   }
 
-  private getDate(date: Date) {
+  private getDate(date: Date): string {
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0') // January is 0!
     const day = String(date.getDate()).padStart(2, '0')
     return `${year}-${month}-${day}`
   }
 
-  public deleteGalleryItem() {
+  public deleteGalleryItem(): void {
     if (confirm('Picture content will be lost')) {
       this.ugDalService.deleteGalleryItem(
         this.pictureItem.id,
@@ -91,7 +96,7 @@ export class PictureContentFormComponent implements OnInit {
     }
   }
 
-  public editGalleryItem() {
+  public editGalleryItem(): void {
     if (confirm('Is information correct')) {
       const ITEM = new PictureItem(
         this.pictureItem.imgData,

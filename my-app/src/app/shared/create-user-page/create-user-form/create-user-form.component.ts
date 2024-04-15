@@ -45,7 +45,7 @@ export class CreateUserFormComponent {
       this.createUserForm.controls['passwordGroup'].controls['password2']
   }
 
-  public onSubmitHandler() {
+  public onSubmitHandler(): void {
     if (this.createUserForm.valid) {
       try {
         const USER_NAME: string = this.createUserForm.value.userName as string
@@ -68,7 +68,7 @@ export class CreateUserFormComponent {
     }
   }
 
-  public matchPassword(control: AbstractControl) {
+  public matchPassword(control: AbstractControl) : any {
     let password1: FormControl = control.get('password1') as FormControl
     let password2: FormControl = control.get('password2') as FormControl
     if (
