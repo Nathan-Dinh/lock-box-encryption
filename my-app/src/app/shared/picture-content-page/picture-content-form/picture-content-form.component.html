@@ -1,5 +1,10 @@
 <div class="text-center container">
-    <img [src]="imgSrc" width="80%" alt="Image placeholder" />
+    @if(!isEn){
+        <img [src]="imgSrc" width="80%" alt="Image placeholder" />
+    }
+    @if(isEn){
+        <img src="../../../../assets/encryptionImage.png" width="80%" alt="Image placeholder" />
+    }
 </div>
 <form [formGroup]="frmPicContent" class="container">
     <div class="form-group">
