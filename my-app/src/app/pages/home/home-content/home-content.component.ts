@@ -7,6 +7,12 @@ import { UserEncryptedFileDalService } from '../../../../services/database/user-
 import { NgForOf, NgIf } from '@angular/common'
 import { RouterLink } from '@angular/router'
 
+interface ItemObject {
+  id: string
+  imgSrc: string
+  encrypt: boolean
+}
+
 @Component({
   selector: 'home-content',
   standalone: true,
@@ -15,11 +21,11 @@ import { RouterLink } from '@angular/router'
   styleUrl: './home-content.component.css',
 })
 export class HomeContentComponent {
-  userName: string
   private ugDalService = inject(UserGalleryDalService)
   private uefDalService = inject(UserEncryptedFileDalService)
   public unFilterPicList: any
   public picList: any
+  public userName: string
 
   constructor(private uiService: UserInfoService) {
     this.userName = ''
@@ -33,28 +39,23 @@ export class HomeContentComponent {
       .findGallery(this.uiService.getUserName())
       .then((data) => data.userGallery)) as { [id: string]: PictureItem }
     for (const [key, value] of Object.entries(OBJECT_VALUES)) {
-      const TEST = await this.uefDalService.findEncryptedItem(
+      const ENCRYPTED_ITEM = await this.uefDalService.findEncryptedItem(
         this.uiService.getUserName(),
         key
       )
-      const currentDate = new Date()
-      const sevenDaysAgo = new Date(
-        currentDate.setDate(currentDate.getDate() - 7)
-      )
-
-      if (value.date >= sevenDaysAgo) {
-        if (TEST) {
-          this.picList.push({
-            id: key,
-            imgSrc: value.imgData,
-            encrypt: true,
-          })
+      const CUR_DATE = new Date()
+      const SEVEN_DAYS_AGO = new Date(CUR_DATE.setDate(CUR_DATE.getDate() - 7))
+      if (value.date >= SEVEN_DAYS_AGO) {
+        const ITEM_OBJECT: ItemObject = {
+          id: key,
+          imgSrc: value.imgData,
+          encrypt: false,
+        }
+        if (ENCRYPTED_ITEM) {
+          ITEM_OBJECT.encrypt = true
+          this.picList.push(ITEM_OBJECT)
         } else {
-          this.picList.push({
-            id: key,
-            imgSrc: value.imgData,
-            encrypt: false,
-          })
+          this.picList.push(ITEM_OBJECT)
         }
       }
     }

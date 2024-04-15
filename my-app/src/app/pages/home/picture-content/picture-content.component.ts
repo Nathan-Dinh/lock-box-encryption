@@ -20,11 +20,11 @@ export class PictureContentComponent {
     this.isEncrypt = false
   }
 
-  setItem(event: any) {
+  setItem(event: PictureItem) {
     this.picItem = event as PictureItem
   }
 
-  isItemEncrypted(event : any){
+  isItemEncrypted(event : boolean){
     this.isEncrypt = event
   }
 }

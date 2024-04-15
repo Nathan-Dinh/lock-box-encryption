@@ -10,15 +10,25 @@ import { UserEncryptedItems } from '../../models/user-encrypted-items.model'
   providedIn: 'root',
 })
 export class UserDalService {
-  private ugDalService = inject(UserGalleryDalService)
-  private uefDalService = inject(UserEncryptedFileDalService)
-  private lbedb = inject(DatabaseService)
+  private ugDalService: UserGalleryDalService = inject(UserGalleryDalService)
+  private uefDalService: UserEncryptedFileDalService = inject(
+    UserEncryptedFileDalService
+  )
+  private lbedb: DatabaseService = inject(DatabaseService)
 
   async insert(user: User): Promise<any> {
     try {
-      const TRAN = await this.lbedb.db.transaction(['users'], 'readwrite')
-      const USER_STORE = await TRAN.objectStore('users')
-      await USER_STORE.add(user)
+      const TRAN: IDBTransaction = this.lbedb.db!.transaction(
+        ['users'],
+        'readwrite'
+      )
+      const USER_STORE: IDBObjectStore = TRAN.objectStore('users')
+      // Create a promise around the IDBRequest to await it
+      await new Promise<void>((resolve, reject) => {
+        const request: IDBRequest<IDBValidKey> = USER_STORE.add(user)
+        request.onsuccess = () => resolve()
+        request.onerror = () => reject(request.error)
+      })
       await this.ugDalService.createUserGallery(new UserGallery(user.userName))
       await this.uefDalService.createUserEncryptFile(
         new UserEncryptedItems(user.userName)
@@ -28,10 +38,16 @@ export class UserDalService {
     }
   }
 
-  delete(user: User) {
+  delete(user: User): Promise<void> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+
+    const TRAN: IDBTransaction = db.transaction(['users'], 'readwrite')
+    const USER_STORE: IDBObjectStore = TRAN.objectStore('users')
+
     return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(['users'], 'readwrite')
-      const USER_STORE = TRAN.objectStore('users')
       const REQ_DELETE = USER_STORE.delete(user.userName)
       REQ_DELETE.onsuccess = (event: any) => {
         resolve(event)
@@ -42,10 +58,16 @@ export class UserDalService {
     })
   }
 
-  update(user: User) {
+  update(user: User): Promise<void> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+
+    const TRAN: IDBTransaction = db.transaction(['users'], 'readwrite')
+    const USER_STORE: IDBObjectStore = TRAN.objectStore('users')
+
     return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(['users'], 'readwrite')
-      const USER_STORE = TRAN.objectStore('users')
       const REQ_GET = USER_STORE.get(user.userName)
 
       REQ_GET.onsuccess = (event: any) => {
@@ -63,12 +85,13 @@ export class UserDalService {
   }
 
   find(userName: string): Promise<any> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+    const TRAN: IDBTransaction = db.transaction(['users'], 'readwrite')
+    const USER_STORE: IDBObjectStore = TRAN.objectStore('users')
     return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(['users']) //readonly
-      TRAN.onerror = () => {
-        console.error('Something went in the database')
-      }
-      const USER_STORE = TRAN.objectStore('users')
       const REQ = USER_STORE.get(userName)
       REQ.onsuccess = (event: any) => {
         event.target.result ? resolve(event.target.result) : resolve(null)

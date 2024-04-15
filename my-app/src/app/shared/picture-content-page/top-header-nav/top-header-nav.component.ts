@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, inject } from '@angular/core'
-import { Location } from '@angular/common'
 import { EncryptFileService } from '../../../../services/crypto/encrypt-file.service'
 import { UserEncryptedFileDalService } from '../../../../services/database/user-encrypted-file.dal.service'
 import { UserInfoService } from '../../../../store/user-info-store.service'
@@ -19,7 +18,6 @@ import { Router } from '@angular/router'
 export class TopHeaderNavComponent implements OnInit {
   @Input() item: PictureItem
   @Input() isEncrypt: boolean
-  private location = inject(Location)
   private efService = inject(EncryptFileService)
   private uefDalService = inject(UserEncryptedFileDalService)
   private uiService = inject(UserInfoService)
@@ -30,14 +28,9 @@ export class TopHeaderNavComponent implements OnInit {
     this.item = new PictureItem('', '', new GeoLocation(0, 0), new Date(), '')
     this.isEncrypt = false
   }
+  public ngOnInit(): void {}
 
-  ngOnInit(): void {}
-
-  public goBack() {
-    this.location.back()
-  }
-
-  public encryptClickHandler() {
+  public encryptClickHandler(): void {
     if (confirm('Do you want to encrypt image')) {
       const ENCRYPTED_IMG = this.efService.encryptItem(this.item.imgData)
       this.item.imgData = ENCRYPTED_IMG
@@ -51,8 +44,8 @@ export class TopHeaderNavComponent implements OnInit {
     }
   }
 
-  public decryptClickHandler() {
-    if (confirm('Do you want to encrypt image')) {
+  public decryptClickHandler(): void {
+    if (confirm('Do you want to decrypt image')) {
       const ENCRYPTED_IMG = this.efService.decryptItem(this.item.imgData)
       const USERNAME = this.uiService.getUserName()
       this.uefDalService.deleteEncryptedFile(USERNAME, this.item.id)

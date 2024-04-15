@@ -13,13 +13,12 @@ export class BottomHeaderNavComponent {
   private cameraService = inject(CameraService)
   private router = inject(Router)
 
-  onCapturePhotoClick() {
+  public onCapturePhotoClick(): void {
     this.cameraService.capturePhoto().then((base64Data) => {
       this.cameraService.setCapturedImage(base64Data)
       this.router.navigate(['home/camera', Date.now()])
     }).catch((error) => {
       console.error('Capture Photo Error:', error)
     })
-
   }
 }
