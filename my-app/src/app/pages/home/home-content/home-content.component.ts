@@ -3,6 +3,7 @@ import { TopHeaderNavComponent } from '../../../shared/components/top-header-nav
 import { UserInfoService } from '../../../../store/user-info-store.service'
 import { UserGalleryDalService } from '../../../../services/database/user-gallery.dal.service'
 import { PictureItem } from '../../../../models/picture-item.model'
+import { UserEncryptedFileDalService } from '../../../../services/database/user-encrypted-file.dal.service'
 import { NgForOf, NgIf } from '@angular/common'
 import { RouterLink } from '@angular/router'
 
@@ -16,6 +17,7 @@ import { RouterLink } from '@angular/router'
 export class HomeContentComponent {
   userName: string
   private ugDalService = inject(UserGalleryDalService)
+  private uefDalService = inject(UserEncryptedFileDalService)
   public unFilterPicList: any
   public picList: any
 
@@ -23,27 +25,38 @@ export class HomeContentComponent {
     this.userName = ''
     this.unFilterPicList = {}
     this.picList = []
-
   }
 
   async ngOnInit() {
     this.userName = this.uiService.getUserName()
-
-    const OBJECT_VALUES = await this.ugDalService
+    const OBJECT_VALUES = (await this.ugDalService
       .findGallery(this.uiService.getUserName())
-      .then((data) => {
-        return data.userGallery
-      })
-    this.unFilterPicList = Object.values(OBJECT_VALUES)
+      .then((data) => data.userGallery)) as { [id: string]: PictureItem }
+    for (const [key, value] of Object.entries(OBJECT_VALUES)) {
+      const TEST = await this.uefDalService.findEncryptedItem(
+        this.uiService.getUserName(),
+        key
+      )
+      const currentDate = new Date()
+      const sevenDaysAgo = new Date(
+        currentDate.setDate(currentDate.getDate() - 7)
+      )
 
-    const currentDate = new Date();
-    const sevenDaysAgo = new Date(currentDate.setDate(currentDate.getDate() - 7));
-
-    for (const pic of this.unFilterPicList) {
-      if (pic.date >= sevenDaysAgo){
-        this.picList.push(pic)
+      if (value.date >= sevenDaysAgo) {
+        if (TEST) {
+          this.picList.push({
+            id: key,
+            imgSrc: value.imgData,
+            encrypt: true,
+          })
+        } else {
+          this.picList.push({
+            id: key,
+            imgSrc: value.imgData,
+            encrypt: false,
+          })
+        }
       }
     }
   }
-
 }

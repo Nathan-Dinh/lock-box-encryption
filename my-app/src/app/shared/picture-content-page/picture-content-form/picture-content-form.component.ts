@@ -30,6 +30,7 @@ export class PictureContentFormComponent implements OnInit {
   private gSErvice = inject(GeoService)
   private router = inject(Router)
   private uefDalService = inject(UserEncryptedFileDalService)
+  public isEn: boolean
   public imgSrc: string
   public frmPicContent: any
   public desControl: FormControl
@@ -39,6 +40,7 @@ export class PictureContentFormComponent implements OnInit {
   constructor() {
     this.imgSrc = ''
     this.pictureItem = {}
+    this.isEn = false
     this.frmPicContent = this.frmBuilder.group({
       description: ['', []],
       date: new FormControl({ value: '', disabled: true }),
@@ -59,7 +61,10 @@ export class PictureContentFormComponent implements OnInit {
       this.uiService.getUserName(),
       GALLERY_ITEM.id
     )
-    if (Found) this.isEncrypt.emit(true)
+    if (Found) {
+        this.isEncrypt.emit(true)
+        this.isEn = true
+      }
     this.pictureItem = GALLERY_ITEM
     this.item.emit(GALLERY_ITEM as PictureItem)
     this.desControl.setValue(GALLERY_ITEM.description)

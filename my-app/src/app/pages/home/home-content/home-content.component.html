@@ -8,9 +8,16 @@
     <h3 style="text-align: center">Photos taken within 7 days</h3>
     <div class="gallery-container">
       <div *ngFor="let pic of picList" style="border: 2px solid red; ">
-        <a routerLink="/home/picture-content" [queryParams]="{id: pic.id}" routerLinkActive="active">
-          <img [src]="pic.imgData" alt="Captured image">
-        </a>
+        @if(pic.encrypt){
+          <a routerLink="/home/picture-content" [queryParams]="{id: pic.id}" routerLinkActive="active">
+            <img src="../../../../assets/encryptionImage.png" alt="Encrypted">
+          </a>
+        }
+        @if(!pic.encrypt){
+          <a routerLink="/home/picture-content" [queryParams]="{id: pic.id}" routerLinkActive="active">
+            <img [src]="pic.imgSrc" alt="Captured image">
+          </a>
+        }
       </div>
     </div>
   </div>
