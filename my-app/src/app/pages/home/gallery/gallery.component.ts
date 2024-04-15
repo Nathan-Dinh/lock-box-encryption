@@ -1,12 +1,17 @@
 import { Component, OnInit, inject } from '@angular/core'
 import { TopHeaderNavComponent } from '../../../shared/components/top-header-nav/top-header-nav.component'
-import { UserDalService } from '../../../../services/database/user.dal.service'
 import { UserInfoService } from '../../../../store/user-info-store.service'
 import { UserGalleryDalService } from '../../../../services/database/user-gallery.dal.service'
 import { UserEncryptedFileDalService } from '../../../../services/database/user-encrypted-file.dal.service'
 import { NgForOf, NgIf } from '@angular/common'
 import { RouterLink } from '@angular/router'
 import { PictureItem } from '../../../../models/picture-item.model'
+
+interface ItemObject {
+  id: string
+  imgSrc: string
+  encrypt: boolean
+}
 
 @Component({
   selector: 'gallery-sub-page',
@@ -16,11 +21,10 @@ import { PictureItem } from '../../../../models/picture-item.model'
   styleUrl: './gallery.component.css',
 })
 export class GalleryComponent implements OnInit {
-  private uiDalService = inject(UserDalService)
   private ugDalService = inject(UserGalleryDalService)
   private uiService = inject(UserInfoService)
   private uefDalService = inject(UserEncryptedFileDalService)
-  public picList: any
+  public picList: Array<ItemObject>
 
   constructor() {
     this.picList = []
@@ -31,20 +35,21 @@ export class GalleryComponent implements OnInit {
       .findGallery(this.uiService.getUserName())
       .then((data) => data.userGallery)) as { [id: string]: PictureItem }
     for (const [key, value] of Object.entries(OBJECT_VALUES)) {
-      const TEST = await this.uefDalService.findEncryptedItem(this.uiService.getUserName(), key)
+      const TEST = await this.uefDalService.findEncryptedItem(
+        this.uiService.getUserName(),
+        key
+      )
+      const ITEM_OBJECT: ItemObject = {
+        id: key,
+        imgSrc: value.imgData,
+        encrypt: false,
+      }
       if (TEST) {
-        this.picList.push({
-          id: key,
-          imgSrc: value.imgData,
-          encrypt: true
-        })
-      }else{
-        this.picList.push({
-          id: key,
-          imgSrc: value.imgData,
-          encrypt: false
-        })
-      } 
+        ITEM_OBJECT.encrypt = true
+        this.picList.push(ITEM_OBJECT as ItemObject)
+      } else {
+        this.picList.push(ITEM_OBJECT as ItemObject)
+      }
     }
   }
 }

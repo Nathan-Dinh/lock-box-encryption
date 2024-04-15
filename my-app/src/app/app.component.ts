@@ -11,7 +11,7 @@ import { DatabaseService } from '../services/database/database.service'
 })
 
 export class AppComponent {
-  dbService : DatabaseService = inject(DatabaseService)
+  private dbService : DatabaseService = inject(DatabaseService)
 
   constructor(){
     this.dbService.initDatabase();

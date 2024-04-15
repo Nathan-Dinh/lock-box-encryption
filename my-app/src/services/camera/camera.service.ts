@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, Observable } from 'rxjs'
 
 declare const Camera: any
 declare const navigator: any
@@ -10,14 +10,11 @@ declare const navigator: any
 export class CameraService {
   private _capturedImage = new BehaviorSubject<string>('')
 
-  constructor() {
-  }
-
-  setCapturedImage(base64Data: string) {
+  setCapturedImage(base64Data: string): void {
     this._capturedImage.next(base64Data)
   }
 
-  get capturedImage() {
+  get capturedImage():Observable<string> {
     return this._capturedImage.asObservable()
   }
 

@@ -1,5 +1,3 @@
-import { PictureItem } from './picture-item.model'
-
 export class User {
   userName: string
   password: string

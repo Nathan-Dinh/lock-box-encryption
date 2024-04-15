@@ -26,10 +26,10 @@ export class AccountFormComponent {
   private builder: FormBuilder = inject(FormBuilder)
   private uDalService: UserDalService = inject(UserDalService)
   private ceService: UserCookieEncryptionService = inject(
-    UserCookieEncryptionService,
+    UserCookieEncryptionService
   )
-  private  ugDalService = inject(UserGalleryDalService)
-  private  uefDalService = inject(UserEncryptedFileDalService)
+  private ugDalService = inject(UserGalleryDalService)
+  private uefDalService = inject(UserEncryptedFileDalService)
   private router: Router = inject(Router)
   public user: User
   public showPassword: boolean
@@ -45,36 +45,36 @@ export class AccountFormComponent {
     this.accFrm = this.builder.group({
       userName: new FormControl(
         { value: this.user.userName, disabled: true },
-        Validators.required,
+        Validators.required
       ),
       password: new FormControl(
         { value: this.user.password, disabled: true },
-        Validators.required,
+        Validators.required
       ),
     })
     this.passControl = this.accFrm.controls['password']
   }
 
-  public showPasswordClickHandler() {
+  public showPasswordClickHandler(): void {
     this.showPassword = !this.showPassword
   }
 
-  public updatePasswordClickHandler() {
+  public updatePasswordClickHandler(): void {
     this.showPassword = true
     this.passControl.enable()
     this.updateMode = true
   }
 
-  public cancelClickHandler() {
+  public cancelClickHandler(): void {
     this.showPassword = false
     this.passControl.disable()
     this.updateMode = false
   }
 
-  public deleteUser() {
+  public deleteUser(): void {
     if (
       confirm(
-        'Continuing will delete all data pertaining to user. Would you like to continue?',
+        'Continuing will delete all data pertaining to user. Would you like to continue?'
       )
     ) {
       this.uDalService.delete(this.user)
@@ -86,10 +86,10 @@ export class AccountFormComponent {
     }
   }
 
-  public updateUser() {
+  public updateUser(): void {
     if (this.accFrm.invalid) {
-      alert('Please fill in the required password field.');
-      return;
+      alert('Please fill in the required password field.')
+      return
     }
 
     if (confirm('Is this the password you want to use?')) {

@@ -5,7 +5,6 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms'
-import { CookieService } from 'ngx-cookie-service'
 import { User } from '../../../../models/user.model'
 import { UserCookieEncryptionService } from '../../../../services/crypto/user-cookie-encryption.service'
 import { AuthControlService } from '../../../../store/auth-store.service'
@@ -37,7 +36,7 @@ export class LoginFormComponent {
     })
   }
 
- public async onSubmitHandler() {
+ public async onSubmitHandler(): Promise<void> {
     if (this.userForm.valid) {
       const USER_NAME: string = this.userForm.value.userName as string
       const PASSWORD: string = this.userForm.value.password as string

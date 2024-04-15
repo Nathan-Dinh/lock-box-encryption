@@ -11,14 +11,14 @@ export class UserCookieEncryptionService {
    private cService = inject(CookieService)
 
 
-  setUserCookie(user : User){
+  setUserCookie(user : User): void{
     this.cService.delete("session")
     const C_BODY: string = user.userName + '-' + user.password
     const C_Name: string = 'session'
     this.cService.set(C_Name, this.encryptCookie(C_BODY), { expires: 0.5 })
   }
 
-  deleteUserCookie(){
+  deleteUserCookie():void{
     this.cService.delete("session")
   }
   
@@ -26,8 +26,8 @@ export class UserCookieEncryptionService {
     return CryptoJS.AES.encrypt(cBody, environment.key).toString()
   }
 
-  decryptCookie(cBody: string) {
-    const bytes = CryptoJS.AES.decrypt(cBody, environment.key)
-    return bytes.toString(CryptoJS.enc.Utf8)
+  decryptCookie(cBody: string): string {
+    const BYTES = CryptoJS.AES.decrypt(cBody, environment.key)
+    return BYTES.toString(CryptoJS.enc.Utf8)
   }
 }

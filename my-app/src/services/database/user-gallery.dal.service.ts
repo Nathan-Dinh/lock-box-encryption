@@ -8,42 +8,64 @@ import { UserGallery } from '../../models/user-gallery.model'
   providedIn: 'root',
 })
 export class UserGalleryDalService {
-  private lbedb = inject(DatabaseService)
+  private lbedb: DatabaseService = inject(DatabaseService)
 
-  createUserGallery(userGallery: UserGallery) {
+  createUserGallery(userGallery: UserGallery): Promise<void> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+
+    const TRAN: IDBTransaction = db.transaction(['user_gallery'], 'readwrite')
+    const USER_GALLERY_STORE: IDBObjectStore = TRAN.objectStore('user_gallery')
+
     return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(['user_gallery'], 'readwrite')
-      const USER_GALLERY_STORE = TRAN.objectStore('user_gallery')
       const REQ = USER_GALLERY_STORE.put(userGallery)
       REQ.onsuccess = (event: any) => resolve(event)
       REQ.onerror = (event: any) => reject(event)
     })
   }
 
-  deleteUserGallery(userName: string){
+  deleteUserGallery(userName: string): Promise<void> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+
+    const TRAN: IDBTransaction = db.transaction(['user_gallery'], 'readwrite')
+    const USER_GALLERY_STORE: IDBObjectStore = TRAN.objectStore('user_gallery')
+
     return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(['user_gallery'], 'readwrite')
-      const USER_GALLERY_STORE = TRAN.objectStore('user_gallery')
       const REQ = USER_GALLERY_STORE.delete(userName)
       REQ.onsuccess = (event: any) => resolve(event)
       REQ.onerror = (event: any) => reject(event)
-    });
+    })
   }
 
   findGallery(userName: string): Promise<any> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+
+    const TRAN: IDBTransaction = db.transaction(['user_gallery'], 'readwrite')
+    const USER_GALLERY_STORE: IDBObjectStore = TRAN.objectStore('user_gallery')
+
     return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(['user_gallery'], 'readwrite')
-      const USER_GALLERY_STORE = TRAN.objectStore('user_gallery')
       const REQ = USER_GALLERY_STORE.get(userName)
       REQ.onsuccess = (event: any) => resolve(event.target.result)
       REQ.onerror = (event: any) => reject(event)
     })
   }
 
-  insertGallery(userName: string, item: PictureItem) {
+  insertGallery(userName: string, item: PictureItem): Promise<void> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+    const TRAN: IDBTransaction = db.transaction(['user_gallery'], 'readwrite')
+    const USER_GALLERY_STORE: IDBObjectStore = TRAN.objectStore('user_gallery')
     return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(['user_gallery'], 'readwrite')
-      const USER_GALLERY_STORE = TRAN.objectStore('user_gallery')
       const REQ = USER_GALLERY_STORE.get(userName)
       REQ.onsuccess = (event: any) => {
         const USER = event.target.result as UserGallery
@@ -59,10 +81,16 @@ export class UserGalleryDalService {
     })
   }
 
-  findGalleryItem(id: string, userName: string) {
+  findGalleryItem(id: string, userName: string): Promise<any> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+
+    const TRAN: IDBTransaction = db.transaction(['user_gallery'], 'readwrite')
+    const USER_GALLERY_STORE: IDBObjectStore = TRAN.objectStore('user_gallery')
+
     return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(['user_gallery'], 'readwrite')
-      const USER_GALLERY_STORE = TRAN.objectStore('user_gallery')
       const REQ = USER_GALLERY_STORE.get(userName)
       REQ.onsuccess = (event: any) => {
         const USER = event.target.result as UserGallery
@@ -76,16 +104,21 @@ export class UserGalleryDalService {
     })
   }
 
-  deleteGalleryItem(id: string, userName: string) {
+  deleteGalleryItem(id: string, userName: string): Promise<void> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+
+    const TRAN: IDBTransaction = db.transaction(['user_gallery'], 'readwrite')
+    const USER_GALLERY_STORE: IDBObjectStore = TRAN.objectStore('user_gallery')
     return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(['user_gallery'], 'readwrite')
-      const USER_STORE = TRAN.objectStore('user_gallery')
-      const REQ = USER_STORE.get(userName)
+      const REQ = USER_GALLERY_STORE.get(userName)
       REQ.onsuccess = (event: any) => {
         const USER = event.target.result as UserGallery
         if (USER) {
           delete USER.userGallery[id]
-          USER_STORE.put(USER)
+          USER_GALLERY_STORE.put(USER)
           resolve(event)
         }
       }
@@ -95,17 +128,21 @@ export class UserGalleryDalService {
     })
   }
 
-  editGalleryItem(pictureItem: PictureItem, userName: string) {
+  editGalleryItem(pictureItem: PictureItem, userName: string): Promise<void> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) {
+      throw new Error('Database has not been initialized.')
+    }
+    const TRAN: IDBTransaction = db.transaction(['user_gallery'], 'readwrite')
+    const USER_GALLERY_STORE: IDBObjectStore = TRAN.objectStore('user_gallery')
     return new Promise((resolve, reject) => {
-      const TRAN = this.lbedb.db.transaction(['user_gallery'], 'readwrite')
-      const USER_STORE = TRAN.objectStore('user_gallery')
-      const REQ = USER_STORE.get(userName)
+      const REQ = USER_GALLERY_STORE.get(userName)
       REQ.onsuccess = (event: any) => {
         const USER = event.target.result as UserGallery
         if (USER) {
           console.log(pictureItem)
           USER.userGallery[pictureItem.id] = pictureItem
-          USER_STORE.put(USER)
+          USER_GALLERY_STORE.put(USER)
           resolve(event)
         }
       }
