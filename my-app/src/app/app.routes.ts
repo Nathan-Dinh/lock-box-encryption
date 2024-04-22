@@ -8,6 +8,7 @@ import { GalleryComponent } from './pages/home/gallery/gallery.component'
 import { AccountComponent } from './pages/home/account/account.component'
 import { CameraComponent } from './pages/home/camera/camera.component'
 import { PictureContentComponent } from './pages/home/picture-content/picture-content.component'
+import { SettingComponent } from './pages/home/setting/setting.component'
 
 export const routes: Routes = [
   {
@@ -24,6 +25,12 @@ export const routes: Routes = [
         path: 'gallery',
         component: GalleryComponent,
         title: 'Gallery',
+        canActivate: [authGuard],
+      },
+      {
+        path: 'setting',
+        component: SettingComponent,
+        title: 'Setting',
         canActivate: [authGuard],
       },
       {
