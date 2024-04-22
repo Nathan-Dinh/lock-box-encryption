@@ -6,19 +6,8 @@
           {{headerTitle}}
         </strong>
       </div>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span> <i class="bi bi-list"></i></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" routerLink="/home/account" routerLinkActive="active">Account</a>
-          </li>
-          <hr>
-          <li>
-            <a routerLink="/login" routerLinkActive="active" (click)="signOutClickHandler()" class="nav-link active">Sign out</a>
-          </li>
-        </ul>
-      </div>
+      <a routerLink="/home/setting">
+        <mat-icon>menu</mat-icon>
+      </a>
     </div>
   </nav>

@@ -1,12 +1,13 @@
 import { Component, HostListener, Input, inject } from '@angular/core'
 import { UserCookieEncryptionService } from '../../../../services/crypto/user-cookie-encryption.service'
+import {MatIconModule} from '@angular/material/icon';
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 
 @Component({
   selector: 'top-header-nav',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, MatIconModule],
   templateUrl: './top-header-nav.component.html',
   styleUrl: './top-header-nav.component.css',
 })
