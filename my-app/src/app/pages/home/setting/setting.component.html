@@ -1,0 +1,26 @@
+<div id="slid-wrapper">
+  <setting-top-header></setting-top-header>
+  @for(item of options; track item){
+  <br />
+  <mat-card>
+    <mat-card-header>
+      <mat-card-subtitle>{{ item.subtitle }}</mat-card-subtitle>
+    </mat-card-header>
+    @for(option of item.options; track option){
+    <mat-card-actions class="container-fluid d-flex justify-content-between">
+      <a mat-button
+        ><mat-icon>{{ option.icon }}</mat-icon
+        >{{ option.name }}</a
+      >
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </mat-card-actions>
+    }
+  </mat-card>
+  }
+  <div class="py-4">
+    <h4 class="mx-3">Login</h4>
+    <div class="container-fluid d-flex justify-content-between">
+      <button mat-button class="text-danger">Log Out</button>
+    </div>
+  </div>
+</div>
