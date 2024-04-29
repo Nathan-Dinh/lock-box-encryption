@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { DatabaseService } from '../services/database/database.service' 
+import { AppUrlService } from '../services/observable/app-url.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +11,20 @@ import { DatabaseService } from '../services/database/database.service'
   styleUrl: './app.component.css'
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   private dbService : DatabaseService = inject(DatabaseService)
+  private auService = inject(AppUrlService) 
 
-  constructor(){
+
+  constructor(private router: Router){
     this.dbService.initDatabase();
+  }
+
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.auService.setUrl(event.url);
+      }
+    });
   }
 }
