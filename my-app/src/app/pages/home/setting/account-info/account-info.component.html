@@ -1,1 +1,44 @@
-<p>account-info works!</p>
+<div id="slid-wrapper" class="container py-4">
+    <mat-card>
+        <mat-card-header>
+          <mat-card-title>Profile</mat-card-title>
+        </mat-card-header>
+        <mat-card-actions class="container-fluid d-flex justify-content-between">
+            <p>Filler</p>
+        </mat-card-actions>
+      </mat-card>
+      <br>
+      <h2>Account Setting</h2>
+      <mat-card>
+        <mat-card-actions (click)="showPassChangeClick()" class="container-fluid d-flex justify-content-between">
+            <button mat-button >change password</button>
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </mat-card-actions>
+      </mat-card>
+</div>
+<div [style.display]="passwordChangeStatus" class="password-overlay-background container">
+    <div class="password-overlay container py-3">
+        <header class="mb-2">
+             <mat-icon (click)="closePassChangeClick()">close</mat-icon>
+        </header>
+        <section>
+            <h1>Change Password</h1>
+            <p>Password change will happen immediately. If user forgets password there is no way of changing said password back.</p>
+            <form>
+                <mat-form-field class="container-fluid">
+                    <mat-label>Current password</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field class="container-fluid">
+                    <mat-label>New password</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field class="container-fluid">
+                    <mat-label>Re-type new password</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <button mat-flat-button color="primary" class="container-fluid rounded"> Change password</button>
+            </form>
+        </section>
+    </div>
+</div>

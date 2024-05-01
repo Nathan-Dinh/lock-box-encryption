@@ -1,0 +1,34 @@
+#slid-wrapper {
+    opacity: 0;
+    animation: slidein 0.05s ease-out forwards 100ms;
+  }
+  
+  @keyframes slidein {
+    from {
+      opacity: 1;
+      transform: translateX(100%);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateX(0%);
+    }
+  }
+
+  .password-overlay-background{
+    position: absolute;
+    top: 0;
+    z-index: 10000;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Black color with 50% opacity */
+  }
+
+  .password-overlay{
+    height: 80vh;
+    width: 100%;
+    margin-top: 1em;
+    background-color: white;
+    border-radius: 0.5em;
+  }
+
