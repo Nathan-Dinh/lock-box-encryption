@@ -1,53 +1,25 @@
 <div id="slid-wrapper" class="container py-4">
     <mat-card>
         <mat-card-header>
-          <mat-card-title>Profile</mat-card-title>
+            <mat-card-title>Profile</mat-card-title>
         </mat-card-header>
         <mat-card-actions class="container-fluid d-flex justify-content-between">
             <p>Filler</p>
         </mat-card-actions>
-      </mat-card>
-      <br>
-      <h2>Account Setting</h2>
-      <mat-card>
+    </mat-card>
+    <br>
+    <h2>Account Setting</h2>
+    <mat-card class="mb-2">
         <mat-card-actions (click)="showPassChangeClick()" class="container-fluid d-flex justify-content-between">
-            <button mat-button >change password</button>
+            <button mat-button >Change password</button>
             <mat-icon>keyboard_arrow_right</mat-icon>
         </mat-card-actions>
-      </mat-card>
+    </mat-card>
+    <mat-card>
+        <mat-card-actions class="container-fluid d-flex justify-content-between">
+            <button mat-button >Delete user</button>
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </mat-card-actions>
+    </mat-card>
 </div>
-<div [style.display]="passwordChangeStatus" class="password-overlay-background container">
-    <div class="password-overlay container py-3">
-        <header class="mb-2">
-             <mat-icon (click)="closePassChangeClick()">close</mat-icon>
-        </header>
-        <section>
-            <h1>Change Password</h1>
-            <p>Password change will happen immediately. If user forgets password there is no way of changing said password back.</p>
-            <form [formGroup]="changePassFrm" (submit)="passChangeSubmitHandler()">
-                <mat-form-field class="container-fluid">
-                    <mat-label>Current password</mat-label>
-                    <input formControlName="curPassword"  matInput>
-                </mat-form-field>
-                <div formGroupName="passwordGroup">
-                    @if(changePassFrm.controls.passwordGroup.errors?.['inValidPass'] && rePassword.touched){
-                        <p class="text-danger">Password must match</p>
-                    }
-
-                    @if(changePassFrm.controls.passwordGroup.errors?.['passValuesBlank'] && rePassword.touched && newPassword.touched){
-                        <p class="text-danger">Fields are required</p>
-                    }
-                    <mat-form-field class="container-fluid">
-                        <mat-label>New password</mat-label>
-                        <input formControlName="newPassword" matInput>
-                    </mat-form-field>
-                    <mat-form-field class="container-fluid">
-                        <mat-label>Re-type new password</mat-label>
-                        <input formControlName="rePassword" matInput>
-                    </mat-form-field>
-                </div>
-                <button mat-flat-button color="primary" class="container-fluid rounded"> Change password</button>
-            </form>
-        </section>
-    </div>
-</div>
+<change-pass-form></change-pass-form>

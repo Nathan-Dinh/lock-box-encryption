@@ -1,0 +1,16 @@
+.password-overlay-background{
+    position: absolute;
+    top: 0;
+    z-index: 10000;
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: rgba(0, 0, 0, 0.4); /* Black color with 50% opacity */
+  }
+
+  .password-overlay{
+    height: 80vh;
+    margin-top: 1em;
+    background-color: white;
+    border-radius: 0.5em;
+  }
+
