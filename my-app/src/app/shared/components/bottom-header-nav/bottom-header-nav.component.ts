@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core'
 import { Router, RouterModule } from '@angular/router'
 import { CameraService } from '../../../../services/camera/camera.service'
+import { MatIcon } from '@angular/material/icon'
 
 @Component({
   selector: 'bottom-header-nav',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, MatIcon],
   templateUrl: './bottom-header-nav.component.html',
   styleUrl: './bottom-header-nav.component.css',
 })

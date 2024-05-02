@@ -1,0 +1,25 @@
+<div id="slid-wrapper" class="container py-4">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Profile</mat-card-title>
+        </mat-card-header>
+        <mat-card-actions class="container-fluid d-flex justify-content-between">
+            <p>Filler</p>
+        </mat-card-actions>
+    </mat-card>
+    <br>
+    <h2>Account Setting</h2>
+    <mat-card class="mb-2">
+        <mat-card-actions (click)="showPassChangeClick()" class="container-fluid d-flex justify-content-between">
+            <button mat-button >Change password</button>
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </mat-card-actions>
+    </mat-card>
+    <mat-card>
+        <mat-card-actions class="container-fluid d-flex justify-content-between">
+            <button mat-button >Delete user</button>
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </mat-card-actions>
+    </mat-card>
+</div>
+<change-pass-form></change-pass-form>

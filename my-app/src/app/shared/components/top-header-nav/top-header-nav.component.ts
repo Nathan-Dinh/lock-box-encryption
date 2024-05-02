@@ -34,7 +34,4 @@ export class TopHeaderNavComponent {
     this.lastScrollTop = SCROLL_TOP <= 0 ? 0 : SCROLL_TOP
   }
 
-  public signOutClickHandler(): void {
-    this.uceService.deleteUserCookie()
-  }
 }

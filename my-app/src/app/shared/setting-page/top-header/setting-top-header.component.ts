@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { Router } from '@angular/router';
+import { AppUrlService } from '../../../../services/observable/app-url.service'
 
 @Component({
   selector: 'setting-top-header',
@@ -11,8 +12,12 @@ import { Router } from '@angular/router';
 })
 export class TopHeaderComponent {
   private router = inject(Router)
+  private auService = inject(AppUrlService)
 
-  public backClicked(){
-    this.router.navigate([".."]);
+  public backClicked() {
+    const subscription = this.auService.getCapturedURL().subscribe((event) => {
+      this.router.navigate([event])
+    })
+    subscription.unsubscribe()
   }
 }
