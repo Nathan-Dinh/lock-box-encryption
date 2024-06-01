@@ -13,8 +13,7 @@ import { AppUrlService } from '../services/observable/app-url.service';
 
 export class AppComponent implements OnInit {
   private dbService : DatabaseService = inject(DatabaseService)
-  private auService = inject(AppUrlService) 
-
+  private auService : AppUrlService = inject(AppUrlService) 
 
   constructor(private router: Router){
     this.dbService.initDatabase();

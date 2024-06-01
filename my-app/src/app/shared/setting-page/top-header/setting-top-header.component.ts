@@ -11,13 +11,13 @@ import { AppUrlService } from '../../../../services/observable/app-url.service'
   styleUrl: './setting-top-header.component.css',
 })
 export class TopHeaderComponent {
-  private router = inject(Router)
-  private auService = inject(AppUrlService)
+  private router: Router = inject(Router)
+  private auService: AppUrlService = inject(AppUrlService)
 
-  public backClicked() {
-    const subscription = this.auService.getCapturedURL().subscribe((event) => {
+  public backClicked(): void {
+    const sub = this.auService.getCapturedURL().subscribe((event) => {
       this.router.navigate([event])
     })
-    subscription.unsubscribe()
+    sub.unsubscribe()
   }
 }

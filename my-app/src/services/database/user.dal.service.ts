@@ -40,10 +40,7 @@ export class UserDalService {
 
   delete(user: User): Promise<void> {
     const db: IDBDatabase | null = this.lbedb.db
-    if (!db) {
-      throw new Error('Database has not been initialized.')
-    }
-
+    if (!db) throw new Error('Database has not been initialized.')
     const TRAN: IDBTransaction = db.transaction(['users'], 'readwrite')
     const USER_STORE: IDBObjectStore = TRAN.objectStore('users')
 
@@ -60,13 +57,9 @@ export class UserDalService {
 
   update(user: User): Promise<void> {
     const db: IDBDatabase | null = this.lbedb.db
-    if (!db) {
-      throw new Error('Database has not been initialized.')
-    }
-
+    if (!db) throw new Error('Database has not been initialized.')
     const TRAN: IDBTransaction = db.transaction(['users'], 'readwrite')
     const USER_STORE: IDBObjectStore = TRAN.objectStore('users')
-
     return new Promise((resolve, reject) => {
       const REQ_GET = USER_STORE.get(user.userName)
 
@@ -86,9 +79,8 @@ export class UserDalService {
 
   find(userName: string): Promise<any> {
     const db: IDBDatabase | null = this.lbedb.db
-    if (!db) {
-      throw new Error('Database has not been initialized.')
-    }
+    if (!db) throw new Error('Database has not been initialized.')
+
     const TRAN: IDBTransaction = db.transaction(['users'], 'readwrite')
     const USER_STORE: IDBObjectStore = TRAN.objectStore('users')
     return new Promise((resolve, reject) => {
@@ -101,5 +93,22 @@ export class UserDalService {
         console.error('Something went wrong finding user')
       }
     })
+  }
+
+  public comparePassword(userName: string, password: string): Promise<any> {
+    const db: IDBDatabase | null = this.lbedb.db
+    if (!db) throw new Error('Database has not been initialized.')
+    const TRAN: IDBTransaction = db.transaction(['users'], 'readwrite')
+    const USER_STORE: IDBObjectStore = TRAN.objectStore('users')
+    return new Promise((resolve, reject) => {
+      const REQ = USER_STORE.get(userName)
+      REQ.onsuccess = (event: any) => {
+        if (event.target.result.password === password) resolve(true)
+        else resolve(false)
+      }
+      REQ.onerror = (event: any) => {
+        reject(event)
+      }
+    }).catch((err) => console.log(err))
   }
 }

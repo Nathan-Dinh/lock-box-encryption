@@ -16,6 +16,12 @@ export class UserInfoService {
     })
   }
 
+  public async comparePassword(password: string): Promise<boolean> {
+    if (await this.uDalService.comparePassword(this.user.userName, password))
+      return true
+    return false
+  }
+
   public setUser(user: User) {
     this.user = user as User
   }

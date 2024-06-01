@@ -1,0 +1,30 @@
+<div
+  [style.display]="clearPhotoFrmDState"
+  class="clear-overlay-background container"
+>
+  <div class="clear-overlay container py-3">
+    <header class="mb-2">
+      <mat-icon (click)="closeClearPhotoFrmClick()" >close</mat-icon>
+    </header>
+    <section>
+      <h1>Clear Photos</h1>
+      <p>
+        Deleting photos will remove all user photos.
+      </p>
+      <form [formGroup]="clearPhotoFrm" (submit)="handlerOnSubmit()">
+        <mat-form-field class="container-fluid">
+          <mat-label>Current password</mat-label>
+          <input type="password" matInput formControlName="curPassword" />
+        </mat-form-field>
+        <mat-form-field class="container-fluid">
+          <mat-label>Re-enter password</mat-label>
+          <input type="password" matInput formControlName="rePassword" />
+        </mat-form-field>
+        <button mat-flat-button color="warn" class="container-fluid rounded">
+          Delete user
+        </button>
+      </form>
+    </section>
+  </div>
+</div>
+

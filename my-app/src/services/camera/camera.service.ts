@@ -18,7 +18,7 @@ export class CameraService {
     return this._capturedImage.asObservable()
   }
 
-  capturePhoto(): Promise<any> {
+  public capturePhoto(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       let localData: string
       let options = {

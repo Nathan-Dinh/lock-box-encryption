@@ -4,7 +4,9 @@
             <mat-card-title>Profile</mat-card-title>
         </mat-card-header>
         <mat-card-actions class="container-fluid d-flex justify-content-between">
-            <p>Filler</p>
+            <b>
+                {{userName}}
+            </b>
         </mat-card-actions>
     </mat-card>
     <br>
@@ -16,10 +18,11 @@
         </mat-card-actions>
     </mat-card>
     <mat-card>
-        <mat-card-actions class="container-fluid d-flex justify-content-between">
+        <mat-card-actions (click)="showDeleteUserFrmClick()" class="container-fluid d-flex justify-content-between">
             <button mat-button >Delete user</button>
             <mat-icon>keyboard_arrow_right</mat-icon>
         </mat-card-actions>
     </mat-card>
 </div>
 <change-pass-form></change-pass-form>
+<delete-user-form></delete-user-form>

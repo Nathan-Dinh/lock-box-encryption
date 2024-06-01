@@ -1,0 +1,36 @@
+<div
+  [style.display]="deleteUserFrmState"
+  class="delete-overlay-background container"
+>
+  <div class="delete-overlay container py-3">
+    <header class="mb-2">
+      <mat-icon (click)="closeDeleteUserFrm()">close</mat-icon>
+    </header>
+    <section>
+      <h1>Delete User</h1>
+      <p>
+        Deleting a user account will permanently remove both the user profile
+        and any associated data. This action cannot be reversed.
+      </p>
+      <form [formGroup]="deleteUserFrm" (submit)="handlerFormSubmit()">
+        @if(deleteUserFrm.errors?.['inValidPass'] && rePassControl.touched){
+        <p class="text-danger">Password must match</p>
+        } 
+        @if(deleteUserFrm.errors?.['passValuesBlank'] && curPassControl.touched && rePassControl.touched){
+        <p class="text-danger">Fields are required</p>
+        }
+        <mat-form-field class="container-fluid">
+          <mat-label>Current password</mat-label>
+          <input type="password" formControlName="curPassword" matInput  />
+        </mat-form-field>
+        <mat-form-field class="container-fluid">
+          <mat-label>Re-enter password</mat-label>
+          <input type="password" formControlName="rePassword" matInput />
+        </mat-form-field>
+        <button mat-flat-button color="warn" class="container-fluid rounded">
+          Delete user
+        </button>
+      </form>
+    </section>
+  </div>
+</div>

@@ -12,7 +12,6 @@ import { SettingComponent } from './pages/home/setting/setting.component'
 import { SettingContentComponent } from './pages/home/setting/setting-content/setting-content.component'
 import { AccountInfoComponent } from './pages/home/setting/account-info/account-info.component'
 import { DatabaseComponent } from './pages/home/setting/database/database.component'
-import { HelpComponent } from './pages/home/setting/help/help.component'
 import { AboutComponent } from './pages/home/setting/about/about.component'
 
 export const routes: Routes = [
@@ -36,36 +35,30 @@ export const routes: Routes = [
         path: 'setting',
         component: SettingComponent,
         title: 'Setting',
-        children:[
+        children: [
           {
             path: '',
             component: SettingContentComponent,
             title: 'Setting',
-            canActivate: [authGuard]
+            canActivate: [authGuard],
           },
           {
             path: 'account-info',
             component: AccountInfoComponent,
             title: 'AccountInfo',
-            canActivate: [authGuard]
+            canActivate: [authGuard],
           },
           {
             path: 'database',
             component: DatabaseComponent,
             title: 'Database',
-            canActivate: [authGuard]
-          },
-          {
-            path: 'help',
-            component: HelpComponent,
-            title: 'Help',
-            canActivate: [authGuard]
+            canActivate: [authGuard],
           },
           {
             path: 'about',
             component: AboutComponent,
             title: 'About',
-            canActivate: [authGuard]
+            canActivate: [authGuard],
           },
         ],
         canActivate: [authGuard],

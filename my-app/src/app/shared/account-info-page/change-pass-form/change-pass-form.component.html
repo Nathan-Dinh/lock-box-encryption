@@ -9,7 +9,7 @@
             <form [formGroup]="changePassFrm" (submit)="passChangeSubmitHandler()">
                 <mat-form-field class="container-fluid">
                     <mat-label>Current password</mat-label>
-                    <input formControlName="curPassword"  matInput>
+                    <input type="password" formControlName="curPassword"  matInput>
                 </mat-form-field>
                 <div formGroupName="passwordGroup">
                     @if(changePassFrm.controls.passwordGroup.errors?.['inValidPass'] && rePassword.touched){
@@ -21,11 +21,11 @@
                     }
                     <mat-form-field class="container-fluid">
                         <mat-label>New password</mat-label>
-                        <input formControlName="newPassword" matInput>
+                        <input type="password" formControlName="newPassword" matInput >
                     </mat-form-field>
                     <mat-form-field class="container-fluid">
                         <mat-label>Re-type new password</mat-label>
-                        <input formControlName="rePassword" matInput>
+                        <input type="password" formControlName="rePassword" matInput>
                     </mat-form-field>
                 </div>
                 <button mat-flat-button color="primary" class="container-fluid rounded"> Change password</button>

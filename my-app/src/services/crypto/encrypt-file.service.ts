@@ -9,13 +9,13 @@ import * as CryptoJS from 'crypto-js'
 export class EncryptFileService {
   private cService = inject(CookieService)
 
-  encryptItem(imgData: string): string {
+  public encryptItem(imgData: string): string {
     this.cService.delete('session')
     const C_BODY: string = imgData
     return CryptoJS.AES.encrypt(C_BODY, environment.key).toString()
   }
 
-  decryptItem(cBody: string): string {
+  public decryptItem(cBody: string): string {
     const BYTES = CryptoJS.AES.decrypt(cBody, environment.key)
     return BYTES.toString(CryptoJS.enc.Utf8)
   }
